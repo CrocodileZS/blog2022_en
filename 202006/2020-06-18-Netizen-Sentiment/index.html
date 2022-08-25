@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.2">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  <title>Netizen Sentiment Recognition During COVID-19 - Yuyang's Blog</title>
+
+  
+
+  
+    <meta name="description" content="The emergence of the COVID-19 has disrupted our normal life. People’s psychological state can also receive a great negative impact. We chose such a topic with humanistic concern in Data Warehouse and">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Netizen Sentiment Recognition During COVID-19">
+<meta property="og:url" content="https://enblog.crocodilezs.top/202006/2020-06-18-Netizen-Sentiment/index.html">
+<meta property="og:site_name" content="Yuyang&#39;s Blog">
+<meta property="og:description" content="The emergence of the COVID-19 has disrupted our normal life. People’s psychological state can also receive a great negative impact. We chose such a topic with humanistic concern in Data Warehouse and">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-1.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-2.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-3.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-4.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-5.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-6.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-7.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-8.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-9.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-10.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-11.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-12.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-13.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-14.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-15.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-16.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-17.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-18.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-19.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-20.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-21.png">
+<meta property="article:published_time" content="2020-08-19T14:42:24.000Z">
+<meta property="article:modified_time" content="2022-01-15T12:48:26.463Z">
+<meta property="article:author" content="CrocodileZS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/covid-figure-1.png">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="Yuyang's Blog" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://bu.dusays.com/2022/05/24/628bb5874996a.jpg">
+  
+
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+
+<header class="header">
+
+<div class="logo-wrap"><a class="title" href="/"><div class="main">Yuyang's Blog</div></a></div>
+<nav class="menu dis-select"><a class="nav-item active" href="/">Blog</a><a class="nav-item" href="/about/">About</a><a class="nav-item" href="/friends/">Links</a></nav></header>
+
+<div class="widgets">
+
+<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">TOC</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Data-import-and-turncut"><span class="toc-text">Data import and turncut</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Handling-missing-values"><span class="toc-text">Handling missing values</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Remove-meaningless-symbols"><span class="toc-text">Remove meaningless symbols</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Word-Cut"><span class="toc-text">Word Cut</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Import-Stop-Words"><span class="toc-text">Import Stop Words</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Word-Bag-Preprocess"><span class="toc-text">Word Bag Preprocess</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TF-IDF-Preprocess"><span class="toc-text">TF-IDF Preprocess</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#word2vec-embedding"><span class="toc-text">word2vec embedding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BOW-SVM"><span class="toc-text">BOW + SVM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TF-IDF-SVM"><span class="toc-text">TF-IDF+SVM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BOW-Decision-Tree-amp-amp-TF-IDF-Decision-Tree"><span class="toc-text">BOW + Decision Tree &amp;&amp; TF-IDF + Decision Tree</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Word2Vec-RNN"><span class="toc-text">Word2Vec + RNN</span></a></li></ol></div></div></div>
+
+<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">Recent Update</span><a class="cap-action" id="rss" title="Subscribe" href="atom.xml"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8938"><path d="M800.966 947.251c0-404.522-320.872-732.448-716.69-732.448V62.785c477.972 0 865.44 395.987 865.44 884.466h-148.75z m-162.273 0h-148.74c0-228.98-181.628-414.598-405.678-414.598v-152.01c306.205 0 554.418 253.68 554.418 566.608z m-446.24-221.12c59.748 0 108.189 49.503 108.189 110.557 0 61.063-48.44 110.563-108.188 110.563-59.747 0-108.18-49.5-108.18-110.563 0-61.054 48.433-110.556 108.18-110.556z" p-id="8939"></path></svg></a></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/202110/2021-10-02-REC-trading/">A Renewable Energy Certificate Trading System Based on Blockchain</a></div><div class="more-item"><a class="title" href="/201911/2019-11-12-price-prediction/">Price Suggestion Challenge - A ML Algorithms Survey</a></div><div class="more-item"><a class="title" href="/202111/%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9%E5%BD%92%E6%A1%A3%E5%92%8C%E8%8B%B1%E6%96%87%E5%8D%9A%E5%AE%A2/">博客内容归档和英文博客</a></div><div class="more-item"><a class="title" href="/201909/%E5%AE%9E%E9%AA%8C%E5%AE%A4%E8%8B%A6%E9%80%BC%E6%90%AC%E7%A0%96%E6%9A%91%E5%81%87%E7%94%9F%E6%B4%BB%E7%BA%AA%E5%AE%9E/">实验室苦逼搬砖暑假生活纪实</a></div><div class="more-item"><a class="title" href="/201909/%E3%80%8C%E5%AD%A6%E7%94%9F%E5%AE%BF%E8%88%8D%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E3%80%8D%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/">「学生宿舍管理系统」实验报告</a></div></div></div>
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a><span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/NLP-Natural-Language-Processing/">NLP (Natural Language Processing)</a></div><div id="post-meta">Posted on&nbsp;<time datetime="2020-08-19T14:42:24.000Z">2020-08-19</time></div></div>
+
+<article class='content md post'>
+<h1 class="article-title"><span>Netizen Sentiment Recognition During COVID-19</span></h1>
+<p>The emergence of the COVID-19 has disrupted our normal life. People’s psychological state can also receive a great negative impact. We chose such a topic with humanistic concern in <code>Data Warehouse and Data Mining</code> course, hoping that through Weibo posts we can gain more insight into people’s emotional state during the COVID-19. We are awarded the best project (1/23) in this course, and we think we could do more in psychological care during COVID-19.</p>
+<h1 id="Data-Source-and-Data-Structure"><a href="#Data-Source-and-Data-Structure" class="headerlink" title="Data Source and Data Structure"></a>Data Source and Data Structure</h1><p>This data comes from a data mining competition organized by DataFountain. The data set is a collection of Weibo crawled during the COVID-19. The link to the dataset is <a target="_blank" rel="noopener" href="https://www.datafountain.cn/competitions/423/datasets">here</a>.</p>
+<blockquote>
+<p>The dataset cannot be downloaded directly from the official website because the competition has ended, the dataset can also be found on <a target="_blank" rel="noopener" href="https://www.kaggle.com/liangqingyuan/chinese-text-multi-classification?select=nCoV_100k_train.labled.csv">Kaggle</a>.</p>
+</blockquote>
+<p>We used 100,000 posts from the training set provided by the competition website, but considering the time and computational cost, I only used the first 10,000 posts with annotations, and divided them into a training set and a test set in a 7/3 ratio. This dataset was based on 230 keywords related to the topic of “新冠肺炎”, which means COVID-19 in Chinese. </p>
+<p>1,000,000 Weibo posts were collected from January 1, 2020 to February 20, 2020, and 100,000 Weibo posts were labeled with three categories: 1 (positive), 0 (neutral) and -1 (negative). The data is stored in csv format in <code>nCoV-100k.labeled.csv</code> file. The original dataset contains 100,000 user-labeled posts in the following format: <code>[post id, posting time, posting account, content, photos, videos, sentiment]</code>.</p>
+<p>The original dataset has six attributes: <code>post id</code> (hashcode), <code>posting time</code> (Date), <code>posting account</code> (String), <code>content</code> (String), <code>photos</code> (String), and <code>videos</code> (String). Predicting <code>sentiment</code>(Int) by the above attributes. The purpose of this project is to use <strong>word bag preprocessing</strong>, <strong>TF-IDF preprocessing</strong>, <strong>word2vec</strong> and compare their effects, focusing on text processing and text sentiment analysis. So we only chose <code>content</code> attribute to predict the sentiment. (It was hard for us to read the emotion from photos and videos.)</p>
+<p>Here is the statistical information of the dataset from Kaggle.</p>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-1.png" alt="" width="80%"/></center>
+
+<p>The bar chart shows that the number of positive, neutral and negative posts varies considerably, with the highest number of neutral posts.</p>
+<p>Here is the first post in dataset.</p>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-2.png" alt="" width="80%"/></center>
+
+<p>We found this posts in Weibo APP.</p>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-3.png" alt="" width="80%"/></center>
+
+<h1 id="Data-Preprocessing"><a href="#Data-Preprocessing" class="headerlink" title="Data Preprocessing"></a>Data Preprocessing</h1><p>We Used Kaggle Kernel. Kaggle provides free access to the Nvidia K80 GPU in the kernel. This benchmark shows that using the GPU for your kernel can achieve a 12.5x speedup in the training of deep learning models.</p>
+<p>ref: <a target="_blank" rel="noopener" href="https://www.cnblogs.com/pinard/p/6744056.html">https://www.cnblogs.com/pinard/p/6744056.html</a></p>
+<h2 id="Data-import-and-turncut"><a href="#Data-import-and-turncut" class="headerlink" title="Data import and turncut"></a>Data import and turncut</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd filepath = <span class="string">&#x27;/kaggle/input/chinese-text-multi-classification/nCoV_100k_train.labled.cs v&#x27;</span> file_data = pd.read_csv(filepath)</span><br><span class="line">data = file_data.head(<span class="number">10000</span>)</span><br><span class="line"><span class="comment"># chose content and sentiment</span></span><br><span class="line">data = data[[<span class="string">&#x27;微博中⽂内容&#x27;</span>, <span class="string">&#x27;情感倾向&#x27;</span>]]</span><br></pre></td></tr></table></figure>
+<h2 id="Handling-missing-values"><a href="#Handling-missing-values" class="headerlink" title="Handling missing values"></a>Handling missing values</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># handling missing values</span></span><br><span class="line">data.isnull().<span class="built_in">sum</span>()</span><br><span class="line">data = data.dropna()</span><br></pre></td></tr></table></figure>
+<h2 id="Remove-meaningless-symbols"><a href="#Remove-meaningless-symbols" class="headerlink" title="Remove meaningless symbols"></a>Remove meaningless symbols</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">clean_zh_text</span>(<span class="params">text</span>): </span><br><span class="line">    <span class="comment"># keep English, digital and Chinese </span></span><br><span class="line">    comp = re.<span class="built_in">compile</span>(<span class="string">&#x27;[^A-Z^a-z^0-9^\u4e00-\u9fa5]&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> comp.sub(<span class="string">&#x27;&#x27;</span>, text)</span><br><span class="line">data[<span class="string">&#x27;微博中⽂内容&#x27;</span>] = data.微博中⽂内容.apply(clean_zh_text)</span><br></pre></td></tr></table></figure>
+<h2 id="Word-Cut"><a href="#Word-Cut" class="headerlink" title="Word Cut"></a>Word Cut</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># word cut </span></span><br><span class="line"><span class="keyword">import</span> jieba </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">chinese_word_cut</span>(<span class="params">mytext</span>): </span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot; &quot;</span>.join(jieba.cut(mytext))</span><br><span class="line"></span><br><span class="line">data[<span class="string">&#x27;cut_comment&#x27;</span>] = data.微博中⽂内容.apply(chinese_word_cut)</span><br><span class="line"></span><br><span class="line"><span class="comment"># divided them into a training set and a test set in a 7/3 ratio.</span></span><br><span class="line">lentrain = <span class="built_in">int</span>((<span class="number">10000</span>-<span class="number">30</span>)*<span class="number">0.7</span>) </span><br><span class="line">lentest = <span class="built_in">int</span>((<span class="number">10000</span>-<span class="number">30</span>)*<span class="number">0.3</span>) </span><br><span class="line">x_train = data.head(lentrain)[<span class="string">&#x27;微博中⽂内容&#x27;</span>] </span><br><span class="line">y_train = data.head(lentrain)[<span class="string">&#x27;情感倾向&#x27;</span>] </span><br><span class="line">x_test = data.tail(lentest)[<span class="string">&#x27;微博中⽂内容&#x27;</span>]</span><br><span class="line">y_test = data.tail(lentest)[<span class="string">&#x27;情感倾向&#x27;</span>]</span><br></pre></td></tr></table></figure>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-4.png" alt="" width="80%"/></center>
+
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-5.png" alt="" width="80%"/></center>
+
+<h2 id="Import-Stop-Words"><a href="#Import-Stop-Words" class="headerlink" title="Import Stop Words"></a>Import Stop Words</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># import stop words</span></span><br><span class="line">stpwrdpath = <span class="string">&quot;/kaggle/input/stop-wordstxt/stop_words.txt&quot;</span> </span><br><span class="line">stpwrd_dic = <span class="built_in">open</span>(stpwrdpath, <span class="string">&#x27;rb&#x27;</span>) </span><br><span class="line">stpwrd_content = stpwrd_dic.read() </span><br><span class="line"></span><br><span class="line"><span class="comment">#transform into list </span></span><br><span class="line">stpwrdlst = stpwrd_content.splitlines()</span><br><span class="line">stpwrd_dic.close()</span><br></pre></td></tr></table></figure>
+<h2 id="Word-Bag-Preprocess"><a href="#Word-Bag-Preprocess" class="headerlink" title="Word Bag Preprocess"></a>Word Bag Preprocess</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text </span><br><span class="line"><span class="keyword">import</span> CountVectorizer</span><br><span class="line"></span><br><span class="line"><span class="comment"># CountVectorizer initialize</span></span><br><span class="line">count_vec = CountVectorizer(stop_words=stpwrdlst) </span><br><span class="line">x_train_list = x_train.tolist() </span><br><span class="line">x_train_cv = count_vec.fit_transform(x_train_list).toarray() </span><br><span class="line">x_test_list = x_test.tolist()</span><br><span class="line">x_test_cv = count_vec.fit_transform(x_test_list).toarray()</span><br></pre></td></tr></table></figure>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-6.png" alt="" width="80%"/></center>
+
+<h2 id="TF-IDF-Preprocess"><a href="#TF-IDF-Preprocess" class="headerlink" title="TF-IDF Preprocess"></a>TF-IDF Preprocess</h2><p>ref:<a target="_blank" rel="noopener" href="https://blog.csdn.net/blmoistawinde/article/details/80816179">https://blog.csdn.net/blmoistawinde/article/details/80816179</a></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfVectorizer </span><br><span class="line">tfidf_vec = TfidfVectorizer(token_pattern=<span class="string">r&quot;(?u)\b\w+\b&quot;</span>, max_df=<span class="number">0.6</span>, stop_words=stpwr dlst) </span><br><span class="line">x_train_tiv = tfidf_vec.fit_transform(x_train_list).toarray()</span><br><span class="line">x_test_tiv = tfidf_vec.fit_transform(x_test_list).toarray()</span><br></pre></td></tr></table></figure>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-7.png" alt="" width="80%"/></center>
+
+<h2 id="word2vec-embedding"><a href="#word2vec-embedding" class="headerlink" title="word2vec embedding"></a>word2vec embedding</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># word2vec </span></span><br><span class="line"><span class="keyword">from</span> gensim.models <span class="keyword">import</span> Word2Vec </span><br><span class="line">model = Word2Vec(x_train_list, hs=<span class="number">1</span>,min_count=<span class="number">1</span>,window=<span class="number">10</span>,size=<span class="number">100</span>)</span><br><span class="line"><span class="keyword">from</span> gensim.test.utils <span class="keyword">import</span> common_texts, get_tmpfile </span><br><span class="line">path = get_tmpfile(<span class="string">&quot;word2vec.model&quot;</span>) </span><br><span class="line">model.save(<span class="string">&quot;word2vec.model&quot;</span>)</span><br><span class="line"><span class="comment"># model = Word2Vec.load(&quot;word2vec.model&quot;)</span></span><br></pre></td></tr></table></figure>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-8.png" alt="" width="80%"/></center>
+
+<p>The corpus of 10,000 training data is still a bit small, but the results are slightly more productive. For example, if we look at the close synonyms of “开心”(happy), we can see that the results returned are more positive.</p>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-9.png" alt="" width="80%"/></center>
+
+<h1 id="Data-Mining-Algorithm"><a href="#Data-Mining-Algorithm" class="headerlink" title="Data Mining Algorithm"></a>Data Mining Algorithm</h1><p>In this section, we will use <code>SVM</code>, <code>decision tree</code> and <code>RNN</code> algorithms to achieve classification. The embedding obtained by <code>BOW</code> and <code>TF-IDF</code> will be classified by SVM and decision tree algorithms, respectively, while the embedding obtained by Word2Vec will be classified by RNN.</p>
+<p>The embedding obtained from Word2Vec will be classified using RNN. The detailed algorithm flow is as follows.</p>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-10.png" alt="" width="80%"/></center>
+
+<h2 id="BOW-SVM"><a href="#BOW-SVM" class="headerlink" title="BOW + SVM"></a><code>BOW</code> + <code>SVM</code></h2><p>The 35596-dimensional embedding of the Weibo posts obtained by <code>BOW</code> is used as the input of the <code>SVM</code> in the <code>sklearn</code> package.<br>The parameters are as follows.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">clf = svm.SVC(C=<span class="number">0.8</span>, kernel=<span class="string">&#x27;rbf&#x27;</span>, gamma=<span class="number">20</span>, decision_function_shape=<span class="string">&#x27;ovr&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler </span><br><span class="line">scale = StandardScaler() </span><br><span class="line">scale_fit = scale.fit(x_cv) </span><br><span class="line"><span class="comment">#x = scale_fit.transform(x) </span></span><br><span class="line">lentrain = <span class="built_in">int</span>((<span class="number">10000</span>-<span class="number">30</span>)*<span class="number">0.7</span>) </span><br><span class="line">lentest = <span class="built_in">int</span>((<span class="number">10000</span>-<span class="number">30</span>)*<span class="number">0.3</span>)</span><br><span class="line"></span><br><span class="line">x_train_cv = scale_fit.transform(x_cv[:lentrain]) </span><br><span class="line">y_train = y[:lentrain] </span><br><span class="line">x_test_cv = scale_fit.transform(x_cv[(-<span class="number">1</span>)*lentest-<span class="number">1</span>:-<span class="number">1</span>]) </span><br><span class="line">y_test = y[(-<span class="number">1</span>)*lentest-<span class="number">1</span>:-<span class="number">1</span>] </span><br><span class="line"><span class="built_in">print</span>(x_train_cv.shape) </span><br><span class="line"><span class="built_in">print</span>(y_train.shape) </span><br><span class="line"><span class="built_in">print</span>(x_test_cv.shape)</span><br><span class="line"><span class="built_in">print</span>(y_test.shape)</span><br></pre></td></tr></table></figure>
+<p><strong>TIPS:</strong></p>
+<ul>
+<li><code>SVM</code> and <code>Decision Tree</code> algorithms for 10,000 of 30,000-dimensional data can take a lot of time, and sklearn does not support GPU computing.</li>
+<li>When you encounter a very large dataset, you should first use a small demo to check the correctness of the code, and then run a large demo with a large amount of data.</li>
+<li><code>BOW</code> and <code>TF-IDF</code> should be used first before dividing the test and training sets, otherwise the test and training sets will not have the same dimensionality! It took a lot of time to fix this error.</li>
+<li>Due to the excessive number of dimensions, remember to normalize the data before <code>SVM</code>.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># prepare the data</span></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line">scale = StandardScaler()</span><br><span class="line">scale_fit = scale.fit(x_cv)</span><br><span class="line"><span class="comment">#x = scale_fit.transform(x)</span></span><br><span class="line">lentrain = <span class="built_in">int</span>((<span class="number">10000</span>-<span class="number">30</span>)*<span class="number">0.7</span>)</span><br><span class="line">lentest = <span class="built_in">int</span>((<span class="number">10000</span>-<span class="number">30</span>)*<span class="number">0.3</span>)</span><br><span class="line"></span><br><span class="line">x_train_cv = scale_fit.transform(x_cv[:lentrain])</span><br><span class="line">y_train = y[:lentrain]</span><br><span class="line">x_test_cv = scale_fit.transform(x_cv[(-<span class="number">1</span>)*lentest-<span class="number">1</span>:-<span class="number">1</span>])</span><br><span class="line">y_test = y[(-<span class="number">1</span>)*lentest-<span class="number">1</span>:-<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span>(x_train_cv.shape)</span><br><span class="line"><span class="built_in">print</span>(y_train.shape)</span><br><span class="line"><span class="built_in">print</span>(x_test_cv.shape)</span><br><span class="line"><span class="built_in">print</span>(y_test.shape)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#test bow+svm</span></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(x_train_cv.shape, <span class="string">&#x27;and &#x27;</span>, y_train.shape)</span><br><span class="line">clf = svm.SVC(C=<span class="number">0.8</span>, kernel=<span class="string">&#x27;rbf&#x27;</span>, gamma=<span class="number">20</span>, decision_function_shape=<span class="string">&#x27;ovr&#x27;</span>)</span><br><span class="line">cv_model = clf.fit(x_train_cv, y_train)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> precision_score, recall_score, f1_score, accuracy_score</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;Precision_score: &#x27;</span>, precision_score(y_hat_cv, y_test, average=<span class="string">&#x27;weighted&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;Recall_score: &#x27;</span>, recall_score(y_hat_cv, y_test, average=<span class="string">&#x27;weighted&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;F1_score: &#x27;</span>, f1_score(y_hat_cv, y_test, average=<span class="string">&#x27;weighted&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;Accuracy_score: &#x27;</span>, accuracy_score(y_hat_cv, y_test))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># roc_curve:真正率（True Positive Rate , TPR）或灵敏度（sensitivity）</span></span><br><span class="line"><span class="comment"># 横坐标：假正率（False Positive Rate , FPR）</span></span><br><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> interp</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> label_binarize</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> cycle</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> roc_curve, auc</span><br><span class="line"></span><br><span class="line">nb_classes = <span class="number">3</span></span><br><span class="line"><span class="comment"># Binarize the output</span></span><br><span class="line">Y_valid = label_binarize(y_test, classes=[i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(nb_classes)])</span><br><span class="line">Y_pred = label_binarize(y_hat_cv, classes=[i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(nb_classes)])</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="comment"># Compute ROC curve and ROC area for each class</span></span><br><span class="line">fpr = <span class="built_in">dict</span>()</span><br><span class="line">tpr = <span class="built_in">dict</span>()</span><br><span class="line">roc_auc = <span class="built_in">dict</span>()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(nb_classes):</span><br><span class="line">    fpr[i], tpr[i], _ = roc_curve(Y_valid[:, i], Y_pred[:, i])</span><br><span class="line">    roc_auc[i] = auc(fpr[i], tpr[i])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Compute micro-average ROC curve and ROC area</span></span><br><span class="line">fpr[<span class="string">&quot;micro&quot;</span>], tpr[<span class="string">&quot;micro&quot;</span>], _ = roc_curve(Y_valid.ravel(), Y_pred.ravel())</span><br><span class="line">roc_auc[<span class="string">&quot;micro&quot;</span>] = auc(fpr[<span class="string">&quot;micro&quot;</span>], tpr[<span class="string">&quot;micro&quot;</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Compute macro-average ROC curve and ROC area</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># First aggregate all false positive rates</span></span><br><span class="line">all_fpr = np.unique(np.concatenate([fpr[i] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(nb_classes)]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Then interpolate all ROC curves at this points</span></span><br><span class="line">mean_tpr = np.zeros_like(all_fpr)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(nb_classes):</span><br><span class="line">    mean_tpr += interp(all_fpr, fpr[i], tpr[i])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Finally average it and compute AUC</span></span><br><span class="line">mean_tpr /= nb_classes</span><br><span class="line"></span><br><span class="line">fpr[<span class="string">&quot;macro&quot;</span>] = all_fpr</span><br><span class="line">tpr[<span class="string">&quot;macro&quot;</span>] = mean_tpr</span><br><span class="line">roc_auc[<span class="string">&quot;macro&quot;</span>] = auc(fpr[<span class="string">&quot;macro&quot;</span>], tpr[<span class="string">&quot;macro&quot;</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot all ROC curves</span></span><br><span class="line">lw = <span class="number">2</span></span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot(fpr[<span class="string">&quot;micro&quot;</span>], tpr[<span class="string">&quot;micro&quot;</span>],</span><br><span class="line">         label=<span class="string">&#x27;micro-average ROC curve (area = &#123;0:0.2f&#125;)&#x27;</span></span><br><span class="line">               <span class="string">&#x27;&#x27;</span>.<span class="built_in">format</span>(roc_auc[<span class="string">&quot;micro&quot;</span>]),</span><br><span class="line">         color=<span class="string">&#x27;deeppink&#x27;</span>, linestyle=<span class="string">&#x27;:&#x27;</span>, linewidth=<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">plt.plot(fpr[<span class="string">&quot;macro&quot;</span>], tpr[<span class="string">&quot;macro&quot;</span>],</span><br><span class="line">         label=<span class="string">&#x27;macro-average ROC curve (area = &#123;0:0.2f&#125;)&#x27;</span></span><br><span class="line">               <span class="string">&#x27;&#x27;</span>.<span class="built_in">format</span>(roc_auc[<span class="string">&quot;macro&quot;</span>]),</span><br><span class="line">         color=<span class="string">&#x27;navy&#x27;</span>, linestyle=<span class="string">&#x27;:&#x27;</span>, linewidth=<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">colors = cycle([<span class="string">&#x27;aqua&#x27;</span>, <span class="string">&#x27;darkorange&#x27;</span>, <span class="string">&#x27;cornflowerblue&#x27;</span>])</span><br><span class="line"><span class="keyword">for</span> i, color <span class="keyword">in</span> <span class="built_in">zip</span>(<span class="built_in">range</span>(nb_classes), colors):</span><br><span class="line">    plt.plot(fpr[i], tpr[i], color=color, lw=lw,</span><br><span class="line">             label=<span class="string">&#x27;ROC curve of class &#123;0&#125; (area = &#123;1:0.2f&#125;)&#x27;</span></span><br><span class="line">             <span class="string">&#x27;&#x27;</span>.<span class="built_in">format</span>(i, roc_auc[i]))</span><br><span class="line"></span><br><span class="line">plt.plot([<span class="number">0</span>, <span class="number">1</span>], [<span class="number">0</span>, <span class="number">1</span>], <span class="string">&#x27;k--&#x27;</span>, lw=lw)</span><br><span class="line">plt.xlim([<span class="number">0.0</span>, <span class="number">1.0</span>])</span><br><span class="line">plt.ylim([<span class="number">0.0</span>, <span class="number">1.05</span>])</span><br><span class="line">plt.xlabel(<span class="string">&#x27;False Positive Rate&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;True Positive Rate&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;Some extension of Receiver operating characteristic to multi-class&#x27;</span>)</span><br><span class="line">plt.legend(loc=<span class="string">&quot;lower right&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>Here’s the result:</p>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-11.png" alt="" width="80%"/></center>
+
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-12.png" alt="" width="80%"/></center>
+
+<p>The reason for the coincidence of the ROC curve and the X-axis is that most of the predictions are zero. The reasons are as follows: </p>
+<ol>
+<li>The two embedding methods, <code>BOW</code> and <code>TF-IDF</code>, do not work well as <code>SVM</code>, and even after normalizing the input word (frequency) vector matrix, most of the predictions are still the same. </li>
+<li>The number of “neutral” labels in the sample is much higher than the number of “positive” and “negative” labels, which is also a problem in the sample selection process.</li>
+<li>The parameters of <code>SVM</code> can be adjusted more precisely to make the classification better.</li>
+</ol>
+<p>Instead of further tuning this model, we tried other algorithms first.</p>
+<h2 id="TF-IDF-SVM"><a href="#TF-IDF-SVM" class="headerlink" title="TF-IDF+SVM"></a><code>TF-IDF</code>+<code>SVM</code></h2><p>The 38473-dimensional embedding of the <code>TF-IDF</code> derived posts is used as the input to the <code>SVM</code> in the sklearn package.</p>
+<p>The source code is similar to the model above, so I will not repeat it here. The results are shown below.</p>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-13.png" alt="" width="80%"/></center>
+
+<p>The parameters are as follows.<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">clf = svm.SVC(C=<span class="number">0.8</span>, kernel=<span class="string">&#x27;rbf&#x27;</span>, gamma=<span class="number">20</span>, decision_function_shape=<span class="string">&#x27;ovr&#x27;</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="BOW-Decision-Tree-amp-amp-TF-IDF-Decision-Tree"><a href="#BOW-Decision-Tree-amp-amp-TF-IDF-Decision-Tree" class="headerlink" title="BOW + Decision Tree &amp;&amp; TF-IDF + Decision Tree"></a><code>BOW</code> + <code>Decision Tree</code> &amp;&amp; <code>TF-IDF</code> + <code>Decision Tree</code></h2><p>The source code is similar to the model above, so I will not repeat it here.</p>
+<p>Here’s the result for <code>BOW</code> + <code>Decision Tree</code>.</p>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-14.png" alt="" width="80%"/></center>
+
+<p>Here’s the result for <code>TF-IDF</code> + <code>Decision Tree</code></p>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-15.png" alt="" width="80%"/></center>
+
+<h2 id="Word2Vec-RNN"><a href="#Word2Vec-RNN" class="headerlink" title="Word2Vec + RNN"></a><code>Word2Vec</code> + <code>RNN</code></h2><p>Embedding Weibo content using Word2Vec, then the resulting 400-dimensional vector is fed into a 10<em>200</em>1 recurrent neural grid with one hidden layer.</p>
+<p>Parameters:<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">batch_size = <span class="number">100</span> </span><br><span class="line">n_iters = <span class="number">20000</span> </span><br><span class="line">seq_dim = <span class="number">20</span> </span><br><span class="line">input_dim = <span class="number">20</span> <span class="comment"># input dimension</span></span><br><span class="line">hidden_dim = <span class="number">200</span> <span class="comment"># hidden layer dimension </span></span><br><span class="line">layer_dim = <span class="number">1</span> <span class="comment"># number of hidden layers</span></span><br><span class="line">output_dim = <span class="number">3</span> <span class="comment"># output dimension</span></span><br></pre></td></tr></table></figure></p>
+<p>So far we have obtained the embedding of all words, the key problem is how to represent the sentences. I referred to the information below and chose to try it with <code>word2vec</code> using Gensim.</p>
+<p>ref1: <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/29978268">https://www.zhihu.com/question/29978268</a></p>
+<p>ref2: <a target="_blank" rel="noopener" href="https://blog.csdn.net/John_xyz/article/details/79424284">https://blog.csdn.net/John_xyz/article/details/79424284</a></p>
+<p>ref3: <a target="_blank" rel="noopener" href="https://www.kaggle.com/kanncaa1/recurrent-neural-network-with-pytorch">https://www.kaggle.com/kanncaa1/recurrent-neural-network-with-pytorch</a></p>
+<p>At the first time we try, there is exploding gradient.</p>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-16.png" alt="" width="80%"/></center>
+
+<p>After adjusting the learning rate to 0.03, the results after 60,000 generations of training are shown below.</p>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-17.png" alt="" width="80%"/></center>
+
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-18.png" alt="" width="80%"/></center>
+
+<p>After adjusting hidden layers, the results after 20,000 generations are shown below.</p>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-19.png" alt="" width="80%"/></center>
+
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-20.png" alt="" width="80%"/></center>
+
+<h1 id="Analysis-of-Results"><a href="#Analysis-of-Results" class="headerlink" title="Analysis of Results"></a>Analysis of Results</h1><p>This is a triple classification problem on the emotion of NLP. The results are shown as follow.</p>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/covid-figure-21.png" alt="" width="80%"/></center>
+
+<p>As can be seen from the above graphs, the <code>SVM</code> and <code>Decision Tree</code> algorithms have very little impact on the actual results, and the most important factor affecting the prediction results is the Embedding method. In this dataset, <code>TF-IDF</code> is more effective than <code>BOW</code>. In the end, the results of <code>TF-IDF</code>+<code>SVM</code>, <code>TF-IDF</code>+<code>Decision Tree</code> and <code>Word2Vec</code>+<code>RNN</code> are similar. The reasons for this result are as follows: </p>
+<ol>
+<li>The original dataset is not evenly distributed, and there are more “neutral” comments than “positive” and “negative” posts, so in the predictive classification process, most of the postss are not evenly distributed. The majority of posts tend to be classified as “neutral” in the prediction classification process, which is of course consistent with the actual situation. This is why the Embedding method has a greater impact on the results than the classification method.</li>
+<li>The dataset is not large enough. I thought that a data set of about 10,000 would take a lot of training time, but Kaggle can use GPUs and the CPU speed of Kaggle is not slow, so I could have done it directly with the original data set of 10W, and the result would be better.</li>
+<li>Parameter optimization. It is only fair to use the optimal parameters of each model for comparison of results.</li>
+</ol>
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>License</span></div><div class="body"><p>This work is licensed under a <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a></p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>READ NEXT</span></section><section class="body fs14"><a id="next" href="/202003/2020-03-10-MCM-Grocery/">[MCM 2020] Data Analysis for Sunshine Company's New Product<span class="note">Older</span></a><div class="line"></div><a id="prev" href="/202110/2021-10-02-REC-trading/">A Renewable Energy Certificate Trading System Based on Blockchain<span class="note">Newer</span></a></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md reveal' id="comments">
+    <div class='cmt-title cap theme'>
+      Join the discussion
+    </div>
+    <div class='cmt-body beaudar'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="beaudar" repo="CrocodileZS/blog-comments" issue-term="pathname" theme="preferred-color-scheme" input-position="top" comment-order="desc" loading="false" branch="main"></div>
+
+    </div>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</p>
+<p>This site was deployed by <a href="https://enblog.crocodilezs.top/">@CrocodileZS</a> using <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.7.0" title="v1.7.0">Stellar</a>.</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.7.0';
+  stellar.config = {
+    date_suffix: {
+      just: 'Just',
+      min: 'minutes ago',
+      hour: 'hours ago',
+      day: 'days ago',
+      month: 'months ago',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadBeaudar() {
+    const els = document.querySelectorAll("#comments #beaudar");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://beaudar.lipk.org/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+      loadBeaudar();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.2">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  <title>Price Suggestion Challenge - A ML Algorithms Survey - Yuyang's Blog</title>
+
+  
+
+  
+    <meta name="description" content="TopicBackgroundConsidering the number of products sold online, product pricing becomes more difficult at scale. Apparel has strong seasonal pricing trends and is heavily influenced by brands, while el">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Price Suggestion Challenge - A ML Algorithms Survey">
+<meta property="og:url" content="https://enblog.crocodilezs.top/201911/2019-11-12-price-prediction/index.html">
+<meta property="og:site_name" content="Yuyang&#39;s Blog">
+<meta property="og:description" content="TopicBackgroundConsidering the number of products sold online, product pricing becomes more difficult at scale. Apparel has strong seasonal pricing trends and is heavily influenced by brands, while el">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/img-price-prediction/1-1.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/img-price-prediction/1-2.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/img-price-prediction/2-2.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/img-price-prediction/2-1.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/img-price-prediction/1-3.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/img-price-prediction/1-4.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/img-price-prediction/1-5.png">
+<meta property="og:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/img-price-prediction/1-6.png">
+<meta property="article:published_time" content="2019-11-12T08:22:10.000Z">
+<meta property="article:modified_time" content="2022-08-25T13:24:40.556Z">
+<meta property="article:author" content="CrocodileZS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://enblog.crocodilezs.top/eysblog_en/imgsource/img-price-prediction/1-1.png">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="Yuyang's Blog" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://bu.dusays.com/2022/05/24/628bb5874996a.jpg">
+  
+
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+
+<header class="header">
+
+<div class="logo-wrap"><a class="title" href="/"><div class="main">Yuyang's Blog</div></a></div>
+<nav class="menu dis-select"><a class="nav-item active" href="/">Blog</a><a class="nav-item" href="/about/">About</a><a class="nav-item" href="/friends/">Links</a></nav></header>
+
+<div class="widgets">
+
+<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">TOC</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Background"><span class="toc-text">Background</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Target"><span class="toc-text">Target</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Analysis-of-atributes"><span class="toc-text">Analysis of atributes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dataset"><span class="toc-text">Dataset</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Evaluation-Indicators"><span class="toc-text">Evaluation Indicators</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Learning-sample-code"><span class="toc-text">Learning sample code</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#import-data-and-exploration"><span class="toc-text">import data and exploration</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Preprocess"><span class="toc-text">Data Preprocess</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Model-Construction"><span class="toc-text">Model Construction</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Try-more-models"><span class="toc-text">Try more models</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MLP"><span class="toc-text">MLP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LGBM"><span class="toc-text">LGBM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MLP-Combined-with-LGBM"><span class="toc-text">MLP Combined with LGBM</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Optimization-when-forming-word-frequency-matrix"><span class="toc-text">Optimization when forming word frequency matrix</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Optimize-the-data-pre-processing-process"><span class="toc-text">Optimize the data pre-processing process</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Analysis-of-the-attributes"><span class="toc-text">Analysis of the attributes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Try-different-attributes-combination"><span class="toc-text">Try different attributes combination</span></a></li></ol></li></ol></div></div></div>
+
+<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">Recent Update</span><a class="cap-action" id="rss" title="Subscribe" href="atom.xml"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8938"><path d="M800.966 947.251c0-404.522-320.872-732.448-716.69-732.448V62.785c477.972 0 865.44 395.987 865.44 884.466h-148.75z m-162.273 0h-148.74c0-228.98-181.628-414.598-405.678-414.598v-152.01c306.205 0 554.418 253.68 554.418 566.608z m-446.24-221.12c59.748 0 108.189 49.503 108.189 110.557 0 61.063-48.44 110.563-108.188 110.563-59.747 0-108.18-49.5-108.18-110.563 0-61.054 48.433-110.556 108.18-110.556z" p-id="8939"></path></svg></a></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/202110/2021-10-02-REC-trading/">A Renewable Energy Certificate Trading System Based on Blockchain</a></div><div class="more-item"><a class="title" href="/201911/2019-11-12-price-prediction/">Price Suggestion Challenge - A ML Algorithms Survey</a></div><div class="more-item"><a class="title" href="/202111/%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9%E5%BD%92%E6%A1%A3%E5%92%8C%E8%8B%B1%E6%96%87%E5%8D%9A%E5%AE%A2/">博客内容归档和英文博客</a></div><div class="more-item"><a class="title" href="/201909/%E5%AE%9E%E9%AA%8C%E5%AE%A4%E8%8B%A6%E9%80%BC%E6%90%AC%E7%A0%96%E6%9A%91%E5%81%87%E7%94%9F%E6%B4%BB%E7%BA%AA%E5%AE%9E/">实验室苦逼搬砖暑假生活纪实</a></div><div class="more-item"><a class="title" href="/201909/%E3%80%8C%E5%AD%A6%E7%94%9F%E5%AE%BF%E8%88%8D%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E3%80%8D%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/">「学生宿舍管理系统」实验报告</a></div></div></div>
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a><span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/NLP-Natural-Language-Processing/">NLP (Natural Language Processing)</a></div><div id="post-meta">Posted on&nbsp;<time datetime="2019-11-12T08:22:10.000Z">2019-11-12</time></div></div>
+
+<article class='content md post'>
+<h1 class="article-title"><span>Price Suggestion Challenge - A ML Algorithms Survey</span></h1>
+<h1 id="Topic"><a href="#Topic" class="headerlink" title="Topic"></a>Topic</h1><h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>Considering the number of products sold online, product pricing becomes more difficult at scale. Apparel has strong seasonal pricing trends and is heavily influenced by brands, while electronics prices fluctuate based on product specifications. It is a meaningful question to help merchants effectively sell their goods by making reasonable pricing based on past information.</p>
+<h2 id="Target"><a href="#Target" class="headerlink" title="Target"></a>Target</h2><p>The product description, product category and brand information is given and combined with the product price from the training data to set the price for the new product. For example,</p>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/img-price-prediction/1-1.png" alt="" width="100%" /></center>
+
+<p>Obviously Versace’s clothes should be much higher in price than Metersbonwe’s clothes, and in the description of the goods, you can find a slight difference between the two descriptions. </p>
+<blockquote>
+<p>This project aims to analyze the text information, extract the important information from the text information and derive the potential relationship with the price。 </p>
+</blockquote>
+<h2 id="Analysis-of-atributes"><a href="#Analysis-of-atributes" class="headerlink" title="Analysis of atributes"></a>Analysis of atributes</h2><center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/img-price-prediction/1-2.png" alt="" width="100%" /></center>
+
+<h2 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h2><ul>
+<li><code>train.csv</code> training dataset (Include <code>price</code>)</li>
+<li><code>test.csv</code> test dataset (Not include <code>price</code>) ; <code>label_test.csv</code> (Corresponding to the price of the test dataset)</li>
+<li><code>f_test.csv</code> Final measurement data set (Not include <code>price</code>)</li>
+</ul>
+<h2 id="Evaluation-Indicators"><a href="#Evaluation-Indicators" class="headerlink" title="Evaluation Indicators"></a>Evaluation Indicators</h2><p>We used <code>Mean Squared Logarithmic Error</code> (MSLE) to evaluate the algorithm: </p>
+<script type="math/tex; mode=display">
+MSLE = \cfrac{1}{n}\sum_{i=1}^n(log(p_i+1)-log(\alpha_i+1))^2
+\tag{1}</script><p>Which \(n\) means the number of samples in test dataset; \(p_i\)means the predicting price of sales; \(\alpha_i\) means the real price.</p>
+<h1 id="Data-Process"><a href="#Data-Process" class="headerlink" title="Data Process"></a>Data Process</h1><h2 id="Learning-sample-code"><a href="#Learning-sample-code" class="headerlink" title="Learning sample code"></a>Learning sample code</h2><p>The sample code given was first tried to understand the general idea of solving this problem. The main processes to solve this price prediction problem are: importing data and data exploration, data pre-processing, model construction, price prediction and measurement.</p>
+<h3 id="import-data-and-exploration"><a href="#import-data-and-exploration" class="headerlink" title="import data and exploration"></a>import data and exploration</h3><p>Import the data and get acknowledge with it.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">train_data = pd.read_csv(<span class="string">&#x27;../data/4/train.csv&#x27;</span>, sep=<span class="string">&quot;\t&quot;</span>)</span><br><span class="line">test_data = pd.read_csv(<span class="string">&#x27;../data/4/test.csv&#x27;</span>,sep=<span class="string">&#x27;\t&#x27;</span>)</span><br><span class="line">train_data.info()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;class &#x27;pandas.core.frame.DataFrame&#x27;&gt;</span><br><span class="line">RangeIndex: 300000 entries, 0 to 299999</span><br><span class="line">Data columns (total 8 columns):</span><br><span class="line">train_id             300000 non-null int64</span><br><span class="line">name                 300000 non-null object</span><br><span class="line">item_condition_id    300000 non-null int64</span><br><span class="line">category_name        298719 non-null object</span><br><span class="line">brand_name           171929 non-null object</span><br><span class="line">price                300000 non-null float64</span><br><span class="line">shipping             300000 non-null int64</span><br><span class="line">item_description     300000 non-null object</span><br><span class="line">dtypes: float64(1), int64(3), object(4)</span><br><span class="line">memory usage: 18.3+ MB</span><br></pre></td></tr></table></figure>
+<h3 id="Data-Preprocess"><a href="#Data-Preprocess" class="headerlink" title="Data Preprocess"></a>Data Preprocess</h3><p>First of all, we need to remove <code>price</code> from the training data, and then remove <code>train_id</code> or <code>test_id</code> which are not useful. By looking at the data attributes above, we can see that <code>category_name</code> and <code>brand_name</code> have missing data, so the sample code is filled with <code>missing</code> directly.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">featureProcessing</span>(<span class="params">df</span>):</span><br><span class="line">    <span class="comment"># delete the data that will not be used</span></span><br><span class="line">    df = df.drop([<span class="string">&#x27;price&#x27;</span>, <span class="string">&#x27;test_id&#x27;</span>, <span class="string">&#x27;train_id&#x27;</span>], axis=<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># deal with the missing value with a default value</span></span><br><span class="line">    df[<span class="string">&#x27;category_name&#x27;</span>] = df[<span class="string">&#x27;category_name&#x27;</span>].fillna(<span class="string">&#x27;missing&#x27;</span>).astype(<span class="built_in">str</span>)</span><br><span class="line">    df[<span class="string">&#x27;brand_name&#x27;</span>] = df[<span class="string">&#x27;brand_name&#x27;</span>].fillna(<span class="string">&#x27;missing&#x27;</span>).astype(<span class="built_in">str</span>)</span><br><span class="line">    df[<span class="string">&#x27;item_description&#x27;</span>] = df[<span class="string">&#x27;item_description&#x27;</span>].fillna(<span class="string">&#x27;No&#x27;</span>)</span><br><span class="line">    <span class="comment"># convert the data : int -&gt; str</span></span><br><span class="line">    df[<span class="string">&#x27;shipping&#x27;</span>] = df[<span class="string">&#x27;shipping&#x27;</span>].astype(<span class="built_in">str</span>)</span><br><span class="line">    df[<span class="string">&#x27;item_condition_id&#x27;</span>] = df[<span class="string">&#x27;item_condition_id&#x27;</span>].astype(<span class="built_in">str</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> df</span><br></pre></td></tr></table></figure>
+<h3 id="Model-Construction"><a href="#Model-Construction" class="headerlink" title="Model Construction"></a>Model Construction</h3><p>First of all, the input of the model is done and the matrix of word frequencies is generated by <code>CountVectorizer</code> and <code>TfidfVectorizer</code>. <code>Tfidf</code> is better because the number of occurrences of each word in all field clocks is taken into account and the generated word frequency matrix is weighted.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">vectorizer = FeatureUnion([</span><br><span class="line">    (<span class="string">&#x27;name&#x27;</span>, CountVectorizer(ngram_range=(<span class="number">1</span>, <span class="number">2</span>), max_features=<span class="number">50000</span>, preprocessor=build_preprocessor_1(<span class="string">&#x27;name&#x27;</span>))),</span><br><span class="line">    (<span class="string">&#x27;category_name&#x27;</span>, CountVectorizer(token_pattern=<span class="string">&#x27;.+&#x27;</span>, preprocessor=build_preprocessor_1(<span class="string">&#x27;category_name&#x27;</span>))),</span><br><span class="line">    (<span class="string">&#x27;brand_name&#x27;</span>, CountVectorizer(token_pattern=<span class="string">&#x27;.+&#x27;</span>, preprocessor=build_preprocessor_1(<span class="string">&#x27;brand_name&#x27;</span>))),</span><br><span class="line">    (<span class="string">&#x27;shipping&#x27;</span>, CountVectorizer(token_pattern=<span class="string">&#x27;\d+&#x27;</span>, preprocessor=build_preprocessor_1(<span class="string">&#x27;shipping&#x27;</span>))),</span><br><span class="line">    (<span class="string">&#x27;item_condition_id&#x27;</span>, CountVectorizer(token_pattern=<span class="string">&#x27;\d+&#x27;</span>, preprocessor=build_preprocessor_1(<span class="string">&#x27;item_condition_id&#x27;</span>))),</span><br><span class="line">    (<span class="string">&#x27;item_description&#x27;</span>, TfidfVectorizer(ngram_range=(<span class="number">1</span>, <span class="number">3</span>),max_features=<span class="number">100000</span>, preprocessor=build_preprocessor_1(<span class="string">&#x27;item_description&#x27;</span>))),</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<p>Predict the price by Ridge Regression.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">ridgeClassify</span>(<span class="params">train_data, train_label</span>):</span><br><span class="line">    ridgeClf = Ridge(</span><br><span class="line">        solver=<span class="string">&#x27;auto&#x27;</span>,</span><br><span class="line">        fit_intercept=<span class="literal">True</span>,</span><br><span class="line">        alpha=<span class="number">0.5</span>,</span><br><span class="line">        max_iter=<span class="number">500</span>,</span><br><span class="line">        normalize=<span class="literal">False</span>,</span><br><span class="line">        tol=<span class="number">0.05</span>)</span><br><span class="line">    <span class="comment"># Training</span></span><br><span class="line">    ridgeClf.fit(train_data, train_label)</span><br><span class="line">    <span class="keyword">return</span> ridgeClf</span><br></pre></td></tr></table></figure>
+<p>By understanding the dataset and studying the sample code, we learned that there are three angles to start with to optimize the answer to this question.</p>
+<ol>
+<li>data preprocessing: How to handle missing values? How should the attributes be combined?</li>
+<li>optimization when forming the word frequency matrix: adjusting the parameters of <code>CountVectorizer</code> and <code>TfidfVectorizer</code>.</li>
+<li>Model selection and optimization: try models other than ridge regression, adjust model parameters.</li>
+</ol>
+<h2 id="Try-more-models"><a href="#Try-more-models" class="headerlink" title="Try more models"></a>Try more models</h2><p>In the sample code above, the result obtained using the ridge regression model is about 3.01. After the hints from the previous class and the online search, we are ready to try the <code>MLP</code> model and the <code>Lgmb</code> model again. After roughly trying both models, we decided to further optimize the model using <code>MLP</code>.</p>
+<h3 id="MLP"><a href="#MLP" class="headerlink" title="MLP"></a><code>MLP</code></h3><p>The result of <code>MLP</code> is shown below:</p>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/img-price-prediction/2-2.png" alt="" width="100%" /></center>
+
+
+<h3 id="LGBM"><a href="#LGBM" class="headerlink" title="LGBM"></a><code>LGBM</code></h3><p>The result of  <code>Lgbm</code> is shown below: </p>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/img-price-prediction/2-1.png" alt="" width="100%" /></center>
+
+
+
+<h3 id="MLP-Combined-with-LGBM"><a href="#MLP-Combined-with-LGBM" class="headerlink" title="MLP Combined with LGBM"></a><code>MLP</code> Combined with <code>LGBM</code></h3><p><1> Preprocessing</p>
+<ul>
+<li>Import the data</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">train = pd.read_csv(<span class="string">&#x27;data/train.csv&#x27;</span>, sep=<span class="string">&#x27;\t&#x27;</span>)</span><br><span class="line">test = pd.read_csv(<span class="string">&#x27;data/test.csv&#x27;</span>, sep=<span class="string">&#x27;\t&#x27;</span>)</span><br><span class="line"><span class="comment"># train and test data are handled together</span></span><br><span class="line">df = pd.concat([train, test], axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Handling missing value</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Handling missing values</span></span><br><span class="line">   df[<span class="string">&#x27;category_name&#x27;</span>] = df[<span class="string">&#x27;category_name&#x27;</span>].fillna(<span class="string">&#x27;MISS&#x27;</span>).astype(<span class="built_in">str</span>)</span><br><span class="line">   df[<span class="string">&#x27;brand_name&#x27;</span>] = df[<span class="string">&#x27;brand_name&#x27;</span>].fillna(<span class="string">&#x27;missing&#x27;</span>).astype(<span class="built_in">str</span>)</span><br><span class="line">   df[<span class="string">&#x27;item_description&#x27;</span>] = df[<span class="string">&#x27;item_description&#x27;</span>].fillna(<span class="string">&#x27;No&#x27;</span>)</span><br><span class="line">   <span class="comment"># modifying data structure</span></span><br><span class="line">   df[<span class="string">&#x27;shipping&#x27;</span>] = df[<span class="string">&#x27;shipping&#x27;</span>].astype(<span class="built_in">str</span>)</span><br><span class="line">   df[<span class="string">&#x27;item_condition_id&#x27;</span>] = df[<span class="string">&#x27;item_condition_id&#x27;</span>].astype(<span class="built_in">str</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Feature vectorization</li>
+</ul>
+<p>Use the <code>CountVectorizer</code> class in the <code>sklearn</code> library to vectorize the text features and use <code>FeatureUnion</code> for feature union.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">vectorizer = FeatureUnion([</span><br><span class="line">        (<span class="string">&#x27;name&#x27;</span>, CountVectorizer(</span><br><span class="line">            ngram_range=(<span class="number">1</span>, <span class="number">2</span>),</span><br><span class="line">            max_features=<span class="number">100000</span>,</span><br><span class="line">            preprocessor=build_preprocessor(<span class="string">&#x27;name&#x27;</span>))),</span><br><span class="line">        (<span class="string">&#x27;category_name&#x27;</span>, CountVectorizer(</span><br><span class="line">            token_pattern=<span class="string">&#x27;.+&#x27;</span>,</span><br><span class="line">            preprocessor=build_preprocessor(<span class="string">&#x27;category_name&#x27;</span>))),</span><br><span class="line">        (<span class="string">&#x27;brand_name&#x27;</span>, CountVectorizer(</span><br><span class="line">            token_pattern=<span class="string">&#x27;.+&#x27;</span>,</span><br><span class="line">            preprocessor=build_preprocessor(<span class="string">&#x27;brand_name&#x27;</span>))),</span><br><span class="line">        (<span class="string">&#x27;shipping&#x27;</span>, CountVectorizer(</span><br><span class="line">            token_pattern=<span class="string">&#x27;\d+&#x27;</span>,</span><br><span class="line">            preprocessor=build_preprocessor(<span class="string">&#x27;shipping&#x27;</span>))),</span><br><span class="line">        (<span class="string">&#x27;item_condition_id&#x27;</span>, CountVectorizer(</span><br><span class="line">            token_pattern=<span class="string">&#x27;\d+&#x27;</span>,</span><br><span class="line">            preprocessor=build_preprocessor(<span class="string">&#x27;item_condition_id&#x27;</span>))),</span><br><span class="line">        (<span class="string">&#x27;item_description&#x27;</span>, TfidfVectorizer(</span><br><span class="line">            ngram_range=(<span class="number">1</span>, <span class="number">3</span>),</span><br><span class="line">            max_features=<span class="number">200000</span>,</span><br><span class="line">            preprocessor=build_preprocessor(<span class="string">&#x27;item_description&#x27;</span>),</span><br><span class="line">            stop_words=<span class="string">&#x27;english&#x27;</span>)),</span><br><span class="line">    ])</span><br></pre></td></tr></table></figure>
+<p><2> Model Construction</p>
+<p>The features were trained using the ridge regression model, the <code>Lgbm</code> model and the <code>mlp</code> model, respectively, and the solutions obtained in local tests were 3.01, 3.00, and 0.26, respectively.</p>
+<ul>
+<li>Ridge Regression</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ridge_classify</span>(<span class="params">train_data,train_label</span>):</span><br><span class="line">    <span class="comment">#model</span></span><br><span class="line">    model = Ridge(</span><br><span class="line">            solver=<span class="string">&#x27;auto&#x27;</span>,</span><br><span class="line">            fit_intercept=<span class="literal">True</span>,</span><br><span class="line">            alpha=<span class="number">0.4</span>,</span><br><span class="line">            max_iter=<span class="number">100</span>,</span><br><span class="line">            normalize=<span class="literal">False</span>,</span><br><span class="line">            tol=<span class="number">0.05</span>)</span><br><span class="line">    <span class="comment">#training</span></span><br><span class="line">    model.fit(train_data, train_label)</span><br><span class="line">    <span class="keyword">return</span> model</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>lgbm</code> Model</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">lgbm_classify</span>(<span class="params">train_data,train_label</span>):</span><br><span class="line">    params = &#123;</span><br><span class="line">        <span class="string">&#x27;learning_rate&#x27;</span>: <span class="number">0.75</span>,</span><br><span class="line">        <span class="string">&#x27;application&#x27;</span>: <span class="string">&#x27;regression&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;max_depth&#x27;</span>: <span class="number">3</span>,</span><br><span class="line">        <span class="string">&#x27;num_leaves&#x27;</span>: <span class="number">100</span>,</span><br><span class="line">        <span class="string">&#x27;verbosity&#x27;</span>: -<span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;metric&#x27;</span>: <span class="string">&#x27;RMSE&#x27;</span>,</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    train_X, valid_X, train_y, valid_y = train_test_split(train_data, train_label, test_size=<span class="number">0.1</span>, random_state=<span class="number">144</span>)</span><br><span class="line">    d_train = lgb.Dataset(train_X, label=train_y)</span><br><span class="line">    d_valid = lgb.Dataset(valid_X, label=valid_y)</span><br><span class="line">    watchlist = [d_train, d_valid]</span><br><span class="line"></span><br><span class="line">    model = lgb.train(params, train_set=d_train, num_boost_round=<span class="number">2200</span>, valid_sets=watchlist, \</span><br><span class="line">                      early_stopping_rounds=<span class="number">50</span>, verbose_eval=<span class="number">100</span>)</span><br><span class="line">    <span class="keyword">return</span> model</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>mlp</code> Model</li>
+</ul>
+<p>The <code>MLP</code> model consists of two fully connected layers and a dropout layer, which is essentially a network of multiple hidden layers.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">mlp_model</span>(<span class="params">train_data,train_label,row_train</span>):</span><br><span class="line">    model = Sequential()</span><br><span class="line">    <span class="comment"># fully connected layer</span></span><br><span class="line">    model.add(Dense(<span class="number">64</span>, input_shape=(row_train,), activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">    <span class="comment"># DropOut layer</span></span><br><span class="line">    model.add(Dropout(<span class="number">0.4</span>))</span><br><span class="line">    <span class="comment"># fully connected layer + classifier</span></span><br><span class="line">    model.add(Dense(<span class="number">1</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    model.<span class="built_in">compile</span>(loss=<span class="string">&#x27;mean_squared_logarithmic_error&#x27;</span>,</span><br><span class="line">                  optimizer=<span class="string">&#x27;adam&#x27;</span>,</span><br><span class="line">                  metrics=[<span class="string">&#x27;accuracy&#x27;</span>]</span><br><span class="line">                  )</span><br><span class="line"></span><br><span class="line">    model.fit(train_data, train_label,</span><br><span class="line">              batch_size=<span class="number">300</span>,</span><br><span class="line">              epochs=<span class="number">1</span>,</span><br><span class="line">              )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> model.predict(X_test)</span><br></pre></td></tr></table></figure>
+<h2 id="Optimization-when-forming-word-frequency-matrix"><a href="#Optimization-when-forming-word-frequency-matrix" class="headerlink" title="Optimization when forming word frequency matrix"></a>Optimization when forming word frequency matrix</h2><p>In the sample code we tried to replace all <code>CountVectorizer</code> with <code>TdidfVectorizer</code> and then use the Ridge model for prediction, but the result is not much optimized, only up to 2.9.<br>Later, when using the <code>MLP</code>, we completely discarded the <code>CountVectorizer</code> and used only the <code>TdidfVectorizer</code>.</p>
+<h2 id="Optimize-the-data-pre-processing-process"><a href="#Optimize-the-data-pre-processing-process" class="headerlink" title="Optimize the data pre-processing process"></a>Optimize the data pre-processing process</h2><p>The way we optimize the <code>MLP</code>, which is basically perfected above, is to <strong>try different combinations of features</strong>.</p>
+<h3 id="Analysis-of-the-attributes"><a href="#Analysis-of-the-attributes" class="headerlink" title="Analysis of the attributes"></a>Analysis of the attributes</h3><p>First I analyzed the attributes:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">item_condition_id    300000 non-null int64</span><br><span class="line">shipping             300000 non-null int64</span><br><span class="line"></span><br><span class="line">name                 300000 non-null object</span><br><span class="line">category_name        298719 non-null object</span><br><span class="line">brand_name           171929 non-null object</span><br><span class="line">item_description     300000 non-null object</span><br><span class="line"></span><br></pre></td></tr></table></figure><br><code>item_condition_id</code> and <code>shipping</code> are considered directly as inputs, while <code>name</code>, <code>category_name</code>, <code>brand_name</code>, <code>item_description</code> are considered for different combinations to try.</p>
+<p>Before that, we found an example tutorial on data visualization to analyze the attributes of the data.<br>The optimal combination of inputs is obtained by observing the data.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">train.head()</span><br></pre></td></tr></table></figure>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/img-price-prediction/1-3.png" alt="" width="100%" /></center>
+
+<ol>
+<li><code>price</code><br>By looking at the data after visualization we know why we have to do <code>log1p</code> on <code>price</code> to make the distribution of <code>price</code> better.</li>
+</ol>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/img-price-prediction/1-4.png" alt="" width="100%" /></center>
+
+<ol>
+<li><code>category_name</code><br>Try to split the property into various subclasses and view the corresponding data.</li>
+</ol>
+<center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/img-price-prediction/1-5.png" alt="" width="100%" /></center>
+
+<ol>
+<li><code>item_description</code><center><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/eysblog_en/imgsource/img-price-prediction/1-6.png" alt="" width="100%" /></center>
+
+</li>
+</ol>
+<h3 id="Try-different-attributes-combination"><a href="#Try-different-attributes-combination" class="headerlink" title="Try different attributes combination"></a>Try different attributes combination</h3><ol>
+<li>simply combine the attributes together in the sample code for text analysis, i.e. <code>name</code> + <code>item_condition_id</code> + <code>category_name</code> + <code>brand_name</code> + <code>shipping</code> + <code>item_description</code>. (6 inputs)</li>
+<li>try <code>name</code>, <code>item_condition_id</code>, <code>shipping</code>,<code>category_name</code> + <code>item_description</code>, <code>brand_name</code>. (5 inputs)</li>
+<li>try <code>name</code>, <code>item_condition_id</code>, <code>shipping</code>, <code>category_name</code> + <code>brand_name</code> + <code>item_description</code>. (4 inputs)</li>
+<li>try <code>name</code>, <code>item_condition_id</code>, <code>shipping</code>, <code>name</code> + <code>category_name</code> + <code>brand_name</code> + <code>item_description</code>. (4 inputs)</li>
+</ol>
+<p>The results for the four combinations as input are very similar, except that combination 1 <code>MSLE</code> is around 0.4, combinations 2 and 3 are around 0.21, and combination 4 eventually runs to around 0.17. Combination 4 actually increases the weight of <code>name</code> to make the final result better.</p>
+<h1 id="Final-source-code-and-experimental-results"><a href="#Final-source-code-and-experimental-results" class="headerlink" title="Final source code and experimental results"></a>Final source code and experimental results</h1><ol>
+<li><p>Data preprocessing</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># data preprocessing</span></span><br><span class="line"><span class="comment"># There are 8 attributes, remove price, train_id will have no influence on the result.</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">data_preprocess</span>(<span class="params">df</span>):</span><br><span class="line">    df[<span class="string">&#x27;name&#x27;</span>] = df[<span class="string">&#x27;name&#x27;</span>].fillna(<span class="string">&#x27;&#x27;</span>) + <span class="string">&#x27; &#x27;</span> + df[<span class="string">&#x27;brand_name&#x27;</span>].fillna(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    df[<span class="string">&#x27;text&#x27;</span>] = (df[<span class="string">&#x27;item_description&#x27;</span>].fillna(<span class="string">&#x27;&#x27;</span>) + <span class="string">&#x27; &#x27;</span> + df[<span class="string">&#x27;name&#x27;</span>] + <span class="string">&#x27; &#x27;</span> + df[<span class="string">&#x27;category_name&#x27;</span>].fillna(<span class="string">&#x27;&#x27;</span>))</span><br><span class="line">    <span class="keyword">return</span> df[[<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;text&#x27;</span>, <span class="string">&#x27;shipping&#x27;</span>, <span class="string">&#x27;item_condition_id&#x27;</span>]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Model Constructio</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">fit_predict</span>(<span class="params">xs, y_train</span>):</span><br><span class="line">    X_train, X_test = xs</span><br><span class="line">    <span class="comment"># Configure the operation method of tf.Session, such as gpu operation or cpu operation</span></span><br><span class="line">    config = tf.ConfigProto(</span><br><span class="line">        <span class="comment"># Set the number of threads for multiple operations in parallel</span></span><br><span class="line">        intra_op_parallelism_threads=<span class="number">1</span>, use_per_session_threads=<span class="number">1</span>, inter_op_parallelism_threads=<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># Session provides the environment for Operation execution and Tensor evaluation.</span></span><br><span class="line">    <span class="keyword">with</span> tf.Session(graph=tf.Graph(), config=config) <span class="keyword">as</span> sess, timer(<span class="string">&#x27;fit_predict&#x27;</span>):</span><br><span class="line">        ks.backend.set_session(sess)</span><br><span class="line">        model_in = ks.Input(shape=(X_train.shape[<span class="number">1</span>],), dtype=<span class="string">&#x27;float32&#x27;</span>, sparse=<span class="literal">True</span>)</span><br><span class="line">        <span class="comment"># ks.layers.Dense means the dimension of output</span></span><br><span class="line">        <span class="comment"># Dense full connected layer, equals to add one layer directly.</span></span><br><span class="line">        <span class="comment"># activation is the activation function.</span></span><br><span class="line">        out = ks.layers.Dense(<span class="number">192</span>, activation=<span class="string">&#x27;relu&#x27;</span>)(model_in)</span><br><span class="line">        out = ks.layers.Dense(<span class="number">64</span>, activation=<span class="string">&#x27;relu&#x27;</span>)(out)</span><br><span class="line">        out = ks.layers.Dense(<span class="number">64</span>, activation=<span class="string">&#x27;relu&#x27;</span>)(out)</span><br><span class="line">        out = ks.layers.Dense(<span class="number">1</span>)(out)</span><br><span class="line">        model = ks.Model(model_in, out)</span><br><span class="line">        model.<span class="built_in">compile</span>(loss=<span class="string">&#x27;mean_squared_error&#x27;</span>, optimizer=ks.optimizers.Adam(lr=<span class="number">3e-3</span>))</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">            <span class="keyword">with</span> timer(<span class="string">f&#x27;epoch <span class="subst">&#123;i + <span class="number">1</span>&#125;</span>&#x27;</span>):</span><br><span class="line">                model.fit(x=X_train, y=y_train, batch_size=<span class="number">2</span> ** (<span class="number">11</span> + i), epochs=<span class="number">1</span>, verbose=<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> model.predict(X_test)[:, <span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Model training and prediction</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    vectorizer = make_union(<span class="comment"># Assemble all transformers into a FeatureUnion. n_jobs means it can be done simultaneously</span></span><br><span class="line">        <span class="comment"># FunctionTransformer implements a custom transformation with no input validation when validate=False</span></span><br><span class="line">        <span class="comment"># TfidfVectorizer function, consider only the words in the first max_feature bits by word frequency, token_pattern=&#x27;\w+&#x27; matches at least one word</span></span><br><span class="line">        make_pipeline(FunctionTransformer(itemgetter(<span class="string">&#x27;name&#x27;</span>), validate=<span class="literal">False</span>), TfidfVectorizer(max_features=<span class="number">100000</span>, token_pattern=<span class="string">&#x27;\w+&#x27;</span>)),</span><br><span class="line">        make_pipeline(FunctionTransformer(itemgetter(<span class="string">&#x27;text&#x27;</span>), validate=<span class="literal">False</span>), TfidfVectorizer(max_features=<span class="number">100000</span>, token_pattern=<span class="string">&#x27;\w+&#x27;</span>)),</span><br><span class="line">        make_pipeline(FunctionTransformer(itemgetter([<span class="string">&#x27;shipping&#x27;</span>, <span class="string">&#x27;item_condition_id&#x27;</span>]), validate=<span class="literal">False</span>),</span><br><span class="line">                      FunctionTransformer(to_records, validate=<span class="literal">False</span>), DictVectorizer()),</span><br><span class="line">        n_jobs=<span class="number">4</span>)</span><br><span class="line">    <span class="comment"># StandardScaler() performs data normalization. Save the parameters (mean, variance) from the training set directly using its object to transform the test set data.</span></span><br><span class="line">    y_scaler = StandardScaler()</span><br><span class="line">    <span class="comment"># The with statement is used when accessing resources to ensure that the necessary &quot;cleanup&quot; operations are performed to release resources regardless of exceptions during use, such as automatic closure of files after use, automatic acquisition and release of locks in threads, etc.</span></span><br><span class="line">    <span class="keyword">with</span> timer(<span class="string">&#x27;process train&#x27;</span>):</span><br><span class="line">        train = pd.read_csv(<span class="string">&#x27;train.csv&#x27;</span>, sep=<span class="string">&#x27;\t&#x27;</span>)</span><br><span class="line">        test = pd.read_csv(<span class="string">&#x27;test.csv&#x27;</span>, sep=<span class="string">&#x27;\t&#x27;</span>)</span><br><span class="line">        <span class="comment"># remove &#x27;price&#x27;</span></span><br><span class="line">        train = train[train[<span class="string">&#x27;price&#x27;</span>] &gt; <span class="number">0</span>].reset_index(drop=<span class="literal">True</span>)</span><br><span class="line">        <span class="comment"># normalization of price</span></span><br><span class="line">        y_train = y_scaler.fit_transform(np.log1p(train[<span class="string">&#x27;price&#x27;</span>].values.reshape(-<span class="number">1</span>, <span class="number">1</span>)))</span><br><span class="line">        X_train = vectorizer.fit_transform(data_preprocess(train)).astype(np.float32)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;X_train: <span class="subst">&#123;X_train.shape&#125;</span> of <span class="subst">&#123;X_train.dtype&#125;</span>&#x27;</span>)</span><br><span class="line">    <span class="keyword">with</span> timer(<span class="string">&#x27;process valid&#x27;</span>):</span><br><span class="line">        X_test = vectorizer.transform(data_preprocess(test)).astype(np.float32)</span><br><span class="line">    <span class="keyword">with</span> ThreadPool(processes=<span class="number">4</span>) <span class="keyword">as</span> pool:</span><br><span class="line">        Xb_train, Xb_test = [x.astype(np.<span class="built_in">bool</span>).astype(np.float32) <span class="keyword">for</span> x <span class="keyword">in</span> [X_train, X_test]]</span><br><span class="line">        xs = [[Xb_train, Xb_test], [X_train, X_test]] * <span class="number">2</span></span><br><span class="line">        <span class="comment"># prediction</span></span><br><span class="line">        y_pred = np.mean(pool.<span class="built_in">map</span>(partial(fit_predict, y_train=y_train), xs), axis=<span class="number">0</span>)</span><br><span class="line">    y_pred = np.expm1(y_scaler.inverse_transform(y_pred.reshape(-<span class="number">1</span>, <span class="number">1</span>))[:, <span class="number">0</span>])</span><br><span class="line">    <span class="comment"># print(type(y_pred))</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Export prediction results to csv</span></span><br><span class="line">    test_id = np.array(<span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(y_pred)))</span><br><span class="line">    dataframe = pd.DataFrame(&#123;<span class="string">&#x27;test_id&#x27;</span>: test_id, <span class="string">&#x27;price&#x27;</span>: y_pred&#125;)</span><br><span class="line">    dataframe.to_csv(<span class="string">&quot;res.csv&quot;</span>, index=<span class="literal">False</span>, sep=<span class="string">&#x27;\t&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># print(&#x27;Valid MSLE: &#123;:.4f&#125;&#x27;.format(mean_squared_log_error(valid[&#x27;price&#x27;], y_pred)))</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>The final experimental result reached 0.179.</p>
+<h1 id="Other-optimization-directions-in-the-MLP-model"><a href="#Other-optimization-directions-in-the-MLP-model" class="headerlink" title="Other optimization directions in the MLP model"></a>Other optimization directions in the <code>MLP</code> model</h1><ol>
+<li>It can be observed that in the word cloud of <code>item_desciption</code>, there are words such as <code>shipping</code> and <code>free</code>, which may stand for free shipping and other meanings, and there is some duplication with the <code>shipping</code> attribute, and using it as a feature word to train the model will cause interference.</li>
+<li>The information contained in a single keyword may not be comprehensive, and there may be great correlation between keywords.</li>
+<li>In the final model <code>MLP</code> uses a four-layer perceptron, and the number of layers of the perceptron and the input size of each layer can be further tuned.</li>
+</ol>
+<h1 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h1><p>This experiment was very difficult and I didn’t know where to start.</p>
+<p>After carefully studying the sample code given in the course and the content of data visualization and analysis, I got a preliminary understanding of both the dataset and the method of prediction.  </p>
+<p>Since I was very unfamiliar with models such as <code>MLP</code> and <code>Lightgbm</code>, I started from the input point of view and experimented with the combination of different attributes to get the final and better results.  </p>
+<p>In the following study, we should learn and understand the model more deeply, and try to create the model independently, instead of modifying other models that have been written.</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[1].<a target="_blank" rel="noopener" href="https://ahmedbesbes.com/how-to-mine-newsfeed-data-and-extract-interactive-insights-in-python.html">https://ahmedbesbes.com/how-to-mine-newsfeed-data-and-extract-interactive-insights-in-python.html</a></p>
+<p>[2].  <a target="_blank" rel="noopener" href="https://github.com/pjankiewicz/mercari-solution">https://github.com/pjankiewicz/mercari-solution</a></p>
+<p>[3].<a target="_blank" rel="noopener" href="https://www.kaggle.com/thykhuely/mercari-interactive-eda-topic-modelling">https://www.kaggle.com/thykhuely/mercari-interactive-eda-topic-modelling</a></p>
+<p>[4].<a target="_blank" rel="noopener" href="https://wklchris.github.io/Py3-pandas.html#统计信息dfdescribe-svalue_counts--unique">https://wklchris.github.io/Py3-pandas.html#%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AFdfdescribe-svalue_counts—unique</a></p>
+<p>[5].<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/多层感知器">https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8</a></p>
+<p>[6].<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39807102/article/details/81912566">https://blog.csdn.net/weixin_39807102/article/details/81912566</a></p>
+<p>[7].<a target="_blank" rel="noopener" href="https://github.com/maiwen/NLP">https://github.com/maiwen/NLP</a></p>
+<p>[8]. <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/正则表达式">https://zh.wikipedia.org/wiki/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F</a></p>
+<p>[9].<a target="_blank" rel="noopener" href="https://blog.csdn.net/u012609509/article/details/72911564">https://blog.csdn.net/u012609509/article/details/72911564</a></p>
+<p>[10]. <a target="_blank" rel="noopener" href="https://www.kaggle.com/tunguz/more-effective-ridge-lgbm-script-lb-0-44823">https://www.kaggle.com/tunguz/more-effective-ridge-lgbm-script-lb-0-44823</a></p>
+<p>[11]. <a target="_blank" rel="noopener" href="https://qiita.com/kazuhirokomoda/items/1e9b7ebcacf264b2d814">https://qiita.com/kazuhirokomoda/items/1e9b7ebcacf264b2d814</a></p>
+<p>[12]. <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/c532424541ad">https://www.jianshu.com/p/c532424541ad</a></p>
+<p>[13]. <a target="_blank" rel="noopener" href="https://www.jiqizhixin.com/articles/2017-11-13-7">https://www.jiqizhixin.com/articles/2017-11-13-7</a></p>
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>License</span></div><div class="body"><p>This work is licensed under a <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a></p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>READ NEXT</span></section><section class="body fs14"><a id="next" href="/201911/Linux%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%8F%8A%E5%BA%94%E7%94%A8%E4%BD%9C%E4%B8%9A%2020191031/">Linux开发环境及应用作业1<span class="note">Older</span></a><div class="line"></div><a id="prev" href="/202003/2020-03-10-MCM-Grocery/">[MCM 2020] Data Analysis for Sunshine Company's New Product<span class="note">Newer</span></a></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md reveal' id="comments">
+    <div class='cmt-title cap theme'>
+      Join the discussion
+    </div>
+    <div class='cmt-body beaudar'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="beaudar" repo="CrocodileZS/blog-comments" issue-term="pathname" theme="preferred-color-scheme" input-position="top" comment-order="desc" loading="false" branch="main"></div>
+
+    </div>
+  </div>
+
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            processEscapes: true
+          }
+        });
+      </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+            tex2jax: {
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+          });
+      </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+              var all = MathJax.Hub.getAllJax(), i;
+              for(i=0; i < all.length; i += 1) {
+                  all[i].SourceElement().parentNode.className += ' has-jax';
+              }
+          });
+      </script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</p>
+<p>This site was deployed by <a href="https://enblog.crocodilezs.top/">@CrocodileZS</a> using <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.7.0" title="v1.7.0">Stellar</a>.</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.7.0';
+  stellar.config = {
+    date_suffix: {
+      just: 'Just',
+      min: 'minutes ago',
+      hour: 'hours ago',
+      day: 'days ago',
+      month: 'months ago',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadBeaudar() {
+    const els = document.querySelectorAll("#comments #beaudar");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://beaudar.lipk.org/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+      loadBeaudar();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

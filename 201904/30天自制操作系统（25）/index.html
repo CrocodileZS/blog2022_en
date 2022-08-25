@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.2">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  <title>30天自制操作系统（25） - Yuyang's Blog</title>
+
+  
+
+  
+    <meta name="description" content="DAY25_增加命令行窗口1.蜂鸣器发声蜂鸣器发声EDX&#x3D;20 EAX&#x3D;声音频率（单位是mHz，即毫赫兹）例如当EAX&#x3D;4400000时，则发出440Hz的声音频率设为0则表示停止发声">
+<meta property="og:type" content="article">
+<meta property="og:title" content="30天自制操作系统（25）">
+<meta property="og:url" content="https://enblog.crocodilezs.top/201904/30%E5%A4%A9%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%8825%EF%BC%89/index.html">
+<meta property="og:site_name" content="Yuyang&#39;s Blog">
+<meta property="og:description" content="DAY25_增加命令行窗口1.蜂鸣器发声蜂鸣器发声EDX&#x3D;20 EAX&#x3D;声音频率（单位是mHz，即毫赫兹）例如当EAX&#x3D;4400000时，则发出440Hz的声音频率设为0则表示停止发声">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s2.ax1x.com/2019/04/28/El968s.jpg">
+<meta property="article:published_time" content="2019-04-28T08:33:50.000Z">
+<meta property="article:modified_time" content="2019-09-27T10:15:28.099Z">
+<meta property="article:author" content="CrocodileZS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/04/28/El968s.jpg">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="Yuyang's Blog" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://bu.dusays.com/2022/05/24/628bb5874996a.jpg">
+  
+
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+
+<header class="header">
+
+<div class="logo-wrap"><a class="title" href="/"><div class="main">Yuyang's Blog</div></a></div>
+<nav class="menu dis-select"><a class="nav-item active" href="/">Blog</a><a class="nav-item" href="/about/">About</a><a class="nav-item" href="/friends/">Links</a></nav></header>
+
+<div class="widgets">
+
+<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">TOC</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%9C%82%E9%B8%A3%E5%99%A8%E5%8F%91%E5%A3%B0"><span class="toc-text">1.蜂鸣器发声</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%A2%9E%E5%8A%A0%E6%9B%B4%E5%A4%9A%E7%9A%84%E9%A2%9C%E8%89%B2-1"><span class="toc-text">2.增加更多的颜色(1)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%A2%9E%E5%8A%A0%E6%9B%B4%E5%A4%9A%E7%9A%84%E9%A2%9C%E8%89%B2-2"><span class="toc-text">3.增加更多的颜色(2)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%AA%97%E5%8F%A3%E5%88%9D%E5%A7%8B%E4%BD%8D%E7%BD%AE"><span class="toc-text">4. 窗口初始位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%A2%9E%E5%8A%A0%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%AA%97%E5%8F%A3-1"><span class="toc-text">5. 增加命令行窗口(1)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%A2%9E%E5%8A%A0%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%AA%97%E5%8F%A3-2"><span class="toc-text">6.增加命令行窗口(2)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%A2%9E%E5%8A%A0%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%AA%97%E5%8F%A3-3"><span class="toc-text">7. 增加命令行窗口(3)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%A2%9E%E5%8A%A0%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%AA%97%E5%8F%A3-4"><span class="toc-text">8.增加命令行窗口(4)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E5%8F%98%E5%BE%97%E6%9B%B4%E5%83%8F%E7%9C%9F%E6%AD%A3%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-1"><span class="toc-text">9.变得更像真正的操作系统(1)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E5%8F%98%E5%BE%97%E6%9B%B4%E5%83%8F%E7%9C%9F%E6%AD%A3%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-2"><span class="toc-text">10.变得更像真正的操作系统(2)</span></a></li></ol></div></div></div>
+
+<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">Recent Update</span><a class="cap-action" id="rss" title="Subscribe" href="atom.xml"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8938"><path d="M800.966 947.251c0-404.522-320.872-732.448-716.69-732.448V62.785c477.972 0 865.44 395.987 865.44 884.466h-148.75z m-162.273 0h-148.74c0-228.98-181.628-414.598-405.678-414.598v-152.01c306.205 0 554.418 253.68 554.418 566.608z m-446.24-221.12c59.748 0 108.189 49.503 108.189 110.557 0 61.063-48.44 110.563-108.188 110.563-59.747 0-108.18-49.5-108.18-110.563 0-61.054 48.433-110.556 108.18-110.556z" p-id="8939"></path></svg></a></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/202110/2021-10-02-REC-trading/">A Renewable Energy Certificate Trading System Based on Blockchain</a></div><div class="more-item"><a class="title" href="/201911/2019-11-12-price-prediction/">Price Suggestion Challenge - A ML Algorithms Survey</a></div><div class="more-item"><a class="title" href="/202111/%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9%E5%BD%92%E6%A1%A3%E5%92%8C%E8%8B%B1%E6%96%87%E5%8D%9A%E5%AE%A2/">博客内容归档和英文博客</a></div><div class="more-item"><a class="title" href="/201909/%E5%AE%9E%E9%AA%8C%E5%AE%A4%E8%8B%A6%E9%80%BC%E6%90%AC%E7%A0%96%E6%9A%91%E5%81%87%E7%94%9F%E6%B4%BB%E7%BA%AA%E5%AE%9E/">实验室苦逼搬砖暑假生活纪实</a></div><div class="more-item"><a class="title" href="/201909/%E3%80%8C%E5%AD%A6%E7%94%9F%E5%AE%BF%E8%88%8D%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E3%80%8D%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/">「学生宿舍管理系统」实验报告</a></div></div></div>
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a><span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></div><div id="post-meta">Posted on&nbsp;<time datetime="2019-04-28T08:33:50.000Z">2019-04-28</time></div></div>
+
+<article class='content md post'>
+<h1 class="article-title"><span>30天自制操作系统（25）</span></h1>
+<h1 id="DAY25-增加命令行窗口"><a href="#DAY25-增加命令行窗口" class="headerlink" title="DAY25_增加命令行窗口"></a>DAY25_增加命令行窗口</h1><h2 id="1-蜂鸣器发声"><a href="#1-蜂鸣器发声" class="headerlink" title="1.蜂鸣器发声"></a>1.蜂鸣器发声</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">蜂鸣器发声</span><br><span class="line">EDX=20 </span><br><span class="line">EAX=声音频率（单位是mHz，即毫赫兹）</span><br><span class="line">例如当EAX=4400000时，则发出440Hz的声音</span><br><span class="line">频率设为0则表示停止发声</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int *hrb_api(int edi, int esi, int ebp, int esp, int ebx, int edx, int ecx, int eax) </span><br><span class="line">&#123; </span><br><span class="line"> （中略）</span><br><span class="line"> &#125; else if (edx == 20) &#123; </span><br><span class="line"> if (eax == 0) &#123; </span><br><span class="line"> i = io_in8(0x61); </span><br><span class="line"> io_out8(0x61, i &amp; 0x0d); </span><br><span class="line"> &#125; else &#123; </span><br><span class="line"> i = 1193180000 / eax; </span><br><span class="line"> io_out8(0x43, 0xb6); </span><br><span class="line"> io_out8(0x42, i &amp; 0xff);</span><br><span class="line"> io_out8(0x42, i &gt;&gt; 8); </span><br><span class="line"> i = io_in8(0x61); </span><br><span class="line"> io_out8(0x61, (i | 0x03) &amp; 0x0f); </span><br><span class="line"> &#125; </span><br><span class="line"> &#125; </span><br><span class="line"> return 0; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-增加更多的颜色-1"><a href="#2-增加更多的颜色-1" class="headerlink" title="2.增加更多的颜色(1)"></a>2.增加更多的颜色(1)</h2><p>修改graphic.c<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">void init_palette(void) </span><br><span class="line">&#123; </span><br><span class="line"> static unsigned char table_rgb[16 * 3] = &#123; </span><br><span class="line"> （中略）</span><br><span class="line"> &#125;; </span><br><span class="line"> unsigned char table2[216 * 3]; </span><br><span class="line"> int r, g, b; </span><br><span class="line"> set_palette(0, 15, table_rgb); </span><br><span class="line"> for (b = 0; b &lt; 6; b++) &#123; </span><br><span class="line"> for (g = 0; g &lt; 6; g++) &#123; </span><br><span class="line"> for (r = 0; r &lt; 6; r++) &#123; </span><br><span class="line"> table2[(r + g * 6 + b * 36) * 3 + 0] = r * 51; </span><br><span class="line"> table2[(r + g * 6 + b * 36) * 3 + 1] = g * 51; </span><br><span class="line"> table2[(r + g * 6 + b * 36) * 3 + 2] = b * 51; </span><br><span class="line"> &#125; </span><br><span class="line"> &#125; </span><br><span class="line"> &#125; </span><br><span class="line"> set_palette(16, 231, table2); </span><br><span class="line"> return; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-增加更多的颜色-2"><a href="#3-增加更多的颜色-2" class="headerlink" title="3.增加更多的颜色(2)"></a>3.增加更多的颜色(2)</h2><p>我们可以用两种颜色交替排列，看上去就像这两种颜色混合在一起一样，这就是要点。颜色的混合方式我们考虑了下面3种（算上完全不混合的情况，一共有5种）。<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/28/El968s.jpg" alt="25.1"></p>
+<h2 id="4-窗口初始位置"><a href="#4-窗口初始位置" class="headerlink" title="4. 窗口初始位置"></a>4. 窗口初始位置</h2><p>因此我们希望让窗口总是显示在画面的中央，而且显示窗口时的图层高度也不能总是固定为3，而是要判断当前画面中窗口的数量并自动显示在最上面。</p>
+<h2 id="5-增加命令行窗口-1"><a href="#5-增加命令行窗口-1" class="headerlink" title="5. 增加命令行窗口(1)"></a>5. 增加命令行窗口(1)</h2><p>于是，我们这次只修改bootpack.c，将命令行窗口的相关变量（buf_cons、sht_cons、task_cons和cons）各准备2个，分别分给命令行1和命令行2。</p>
+<h2 id="6-增加命令行窗口-2"><a href="#6-增加命令行窗口-2" class="headerlink" title="6.增加命令行窗口(2)"></a>6.增加命令行窗口(2)</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">struct CONSOLE *cons = (struct CONSOLE *) *((int *) 0x0fec);</span><br></pre></td></tr></table></figure>
+<p>这里的cons变量是用来判断“要向哪个命令行窗口输出字符”的关键。该变量的值是从内存地址0x0fec读取出来的，而无论从哪个任务读取这个内存地址中的值，得到的肯定都是同一个值，因此不管在哪个窗口中运行a.hrb，都只能在固定的其中一个窗口中显示字符。</p>
+<h2 id="7-增加命令行窗口-3"><a href="#7-增加命令行窗口-3" class="headerlink" title="7. 增加命令行窗口(3)"></a>7. 增加命令行窗口(3)</h2><p>问题出在cmd_app身上<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set_segmdesc(gdt + 1003, finfo-&gt;size - 1, (int) p, AR_CODE32_ER + 0x60); </span><br><span class="line"> set_segmdesc(gdt + 1004, segsiz - 1, (int) q, AR_DATA32_RW + 0x60); </span><br><span class="line"> （中略）</span><br><span class="line"> start_app(0x1b, 1003 * 8, esp, 1004 * 8, &amp;(task-&gt;tss.esp0));</span><br><span class="line"> </span><br></pre></td></tr></table></figure></p>
+<p>首先，color.hrb在某个窗口中被运行，启动程序一切顺利，然后显示窗口并绘图，接下来等待键盘输入并进入休眠状态。到这里为止没有任何问题。<br>然后我们在另外一个窗口中运行color.hrb，程序也顺利启动了，显示窗口并绘图，随后进入休眠状态。然而在这个时候，问题其实已经发生了。这是怎么回事呢？因为我们为color.hrb准备的1003号代码段和1004号数据段，被color2.hrb所用的段给覆盖掉了。<br>因此，当按下回车键唤醒color.hrb时，就会发生异常情况——明明应该去运行color.hrb的，结果却错误地运行了color2.hrb，这样当然会出错了。</p>
+<h2 id="8-增加命令行窗口-4"><a href="#8-增加命令行窗口-4" class="headerlink" title="8.增加命令行窗口(4)"></a>8.增加命令行窗口(4)</h2><p>这次的修改也很简单，首先将原来task_cons[0]的地方改为key_wintask和shttask，这样一来，用键盘强制结束时会以当前输入窗口为对象，而用鼠标点击“×”按钮时会以被点击的窗口为对象。</p>
+<h2 id="9-变得更像真正的操作系统-1"><a href="#9-变得更像真正的操作系统-1" class="headerlink" title="9.变得更像真正的操作系统(1)"></a>9.变得更像真正的操作系统(1)</h2><h2 id="10-变得更像真正的操作系统-2"><a href="#10-变得更像真正的操作系统-2" class="headerlink" title="10.变得更像真正的操作系统(2)"></a>10.变得更像真正的操作系统(2)</h2><p>这样肯定不行，因为命令行窗口任务的优先级比较低，只有当bootpack.c的HariMain休眠之后才会运行命令行窗口任务，而如果不运行这个任务的话，FIFO缓冲区就不会被初始化，这就相当于我们在向一个还没初始化的FIFO强行发送数据，于是造成fifo32_put混乱而导致重启。</p>
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>License</span></div><div class="body"><p>This work is licensed under a <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a></p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>READ NEXT</span></section><section class="body fs14"><a id="next" href="/201904/30%E5%A4%A9%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%8824%EF%BC%89/">30天自制操作系统（24）<span class="note">Older</span></a><div class="line"></div><a id="prev" href="/201904/30%E5%A4%A9%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%8826%EF%BC%89/">30天自制操作系统（26）<span class="note">Newer</span></a></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md reveal' id="comments">
+    <div class='cmt-title cap theme'>
+      Join the discussion
+    </div>
+    <div class='cmt-body beaudar'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="beaudar" repo="CrocodileZS/blog-comments" issue-term="pathname" theme="preferred-color-scheme" input-position="top" comment-order="desc" loading="false" branch="main"></div>
+
+    </div>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</p>
+<p>This site was deployed by <a href="https://enblog.crocodilezs.top/">@CrocodileZS</a> using <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.7.0" title="v1.7.0">Stellar</a>.</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.7.0';
+  stellar.config = {
+    date_suffix: {
+      just: 'Just',
+      min: 'minutes ago',
+      hour: 'hours ago',
+      day: 'days ago',
+      month: 'months ago',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadBeaudar() {
+    const els = document.querySelectorAll("#comments #beaudar");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://beaudar.lipk.org/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+      loadBeaudar();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
