@@ -18,17 +18,17 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
-  <title>基于链接内容的社区发现算法（二） - Yuyang's Blog</title>
+  <title>(Note) Robust detection of link communities in large social networks by exploiting link semantics - PART 2 - Yuyang's Blog</title>
 
   
 
   
-    <meta name="description" content="Robust Detection of Link Communities in Large Social Network by Exploiting Link Semantics这一部分没什么难点，ppt里写的都很清楚了。。  三、试验1.数据集我们选择了两个数据集，包括美国安然能源公司内部的邮件内容（安然公司丑闻，加州能源危机）和Reddit新闻网站三天的的三个论坛的内容。如果用户A对用户B的帖">
+    <meta name="description" content="ExperimentsDatasetWe selected two datasets, including the content of internal emails of the US energy company Enron (Enron scandal, California energy crisis) and the content of three forums of the new">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基于链接内容的社区发现算法（二）">
+<meta property="og:title" content="(Note) Robust detection of link communities in large social networks by exploiting link semantics - PART 2">
 <meta property="og:url" content="https://enblog.crocodilezs.top/201904/%E5%9F%BA%E4%BA%8E%E9%93%BE%E6%8E%A5%E5%86%85%E5%AE%B9%E7%9A%84%E7%A4%BE%E5%8C%BA%E5%8F%91%E7%8E%B0%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
 <meta property="og:site_name" content="Yuyang&#39;s Blog">
-<meta property="og:description" content="Robust Detection of Link Communities in Large Social Network by Exploiting Link Semantics这一部分没什么难点，ppt里写的都很清楚了。。  三、试验1.数据集我们选择了两个数据集，包括美国安然能源公司内部的邮件内容（安然公司丑闻，加州能源危机）和Reddit新闻网站三天的的三个论坛的内容。如果用户A对用户B的帖">
+<meta property="og:description" content="ExperimentsDatasetWe selected two datasets, including the content of internal emails of the US energy company Enron (Enron scandal, California energy crisis) and the content of three forums of the new">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://s2.ax1x.com/2019/04/11/A7JUNd.md.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/04/11/A7J03t.png">
@@ -43,9 +43,10 @@
 <meta property="og:image" content="https://s2.ax1x.com/2019/04/11/A7Jh3q.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/04/11/A7JfCn.md.png">
 <meta property="article:published_time" content="2019-04-17T02:48:50.000Z">
-<meta property="article:modified_time" content="2022-05-23T17:19:47.669Z">
+<meta property="article:modified_time" content="2022-08-27T12:18:48.389Z">
 <meta property="article:author" content="CrocodileZS">
-<meta property="article:tag" content="社区发现">
+<meta property="article:tag" content="Communities Detection">
+<meta property="article:tag" content="Knowledge Graph">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://s2.ax1x.com/2019/04/11/A7JUNd.md.png">
   
@@ -87,9 +88,9 @@
 
 <div class="widgets">
 
-<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">TOC</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%AF%95%E9%AA%8C"><span class="toc-text">三、试验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-text">1.数据集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%AF%B9%E6%AF%94%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">2.对比的方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%B5%8B%E8%AF%84%E5%8F%82%E6%95%B0"><span class="toc-text">3.测评参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E7%BB%93%E6%9E%9C"><span class="toc-text">4.结果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E4%B8%AA%E4%BE%8B%E7%A0%94%E7%A9%B6"><span class="toc-text">5.个例研究</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E7%BB%93%E8%AE%BA"><span class="toc-text">四、结论</span></a></li></ol></div></div></div>
+<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">TOC</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Experiments"><span class="toc-text">Experiments</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dataset"><span class="toc-text">Dataset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-method-of-comparison"><span class="toc-text">The method of comparison</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Evaluation-Indicators"><span class="toc-text">Evaluation Indicators</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Result"><span class="toc-text">Result</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Case-study"><span class="toc-text">Case study</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-text">Conclusion</span></a></li></ol></div></div></div>
 
-<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">Recent Update</span><a class="cap-action" id="rss" title="Subscribe" href="atom.xml"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8938"><path d="M800.966 947.251c0-404.522-320.872-732.448-716.69-732.448V62.785c477.972 0 865.44 395.987 865.44 884.466h-148.75z m-162.273 0h-148.74c0-228.98-181.628-414.598-405.678-414.598v-152.01c306.205 0 554.418 253.68 554.418 566.608z m-446.24-221.12c59.748 0 108.189 49.503 108.189 110.557 0 61.063-48.44 110.563-108.188 110.563-59.747 0-108.18-49.5-108.18-110.563 0-61.054 48.433-110.556 108.18-110.556z" p-id="8939"></path></svg></a></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/202110/2021-10-02-REC-trading/">A Renewable Energy Certificate Trading System Based on Blockchain</a></div><div class="more-item"><a class="title" href="/201911/2019-11-12-price-prediction/">Price Suggestion Challenge - A ML Algorithms Survey</a></div><div class="more-item"><a class="title" href="/202111/%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9%E5%BD%92%E6%A1%A3%E5%92%8C%E8%8B%B1%E6%96%87%E5%8D%9A%E5%AE%A2/">博客内容归档和英文博客</a></div><div class="more-item"><a class="title" href="/201909/%E5%AE%9E%E9%AA%8C%E5%AE%A4%E8%8B%A6%E9%80%BC%E6%90%AC%E7%A0%96%E6%9A%91%E5%81%87%E7%94%9F%E6%B4%BB%E7%BA%AA%E5%AE%9E/">实验室苦逼搬砖暑假生活纪实</a></div><div class="more-item"><a class="title" href="/201909/%E3%80%8C%E5%AD%A6%E7%94%9F%E5%AE%BF%E8%88%8D%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E3%80%8D%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/">「学生宿舍管理系统」实验报告</a></div></div></div>
+<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">Recent Update</span><a class="cap-action" id="rss" title="Subscribe" href="atom.xml"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8938"><path d="M800.966 947.251c0-404.522-320.872-732.448-716.69-732.448V62.785c477.972 0 865.44 395.987 865.44 884.466h-148.75z m-162.273 0h-148.74c0-228.98-181.628-414.598-405.678-414.598v-152.01c306.205 0 554.418 253.68 554.418 566.608z m-446.24-221.12c59.748 0 108.189 49.503 108.189 110.557 0 61.063-48.44 110.563-108.188 110.563-59.747 0-108.18-49.5-108.18-110.563 0-61.054 48.433-110.556 108.18-110.556z" p-id="8939"></path></svg></a></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/201911/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%BD%9C%E4%B8%9A%E6%8A%A5%E5%91%8A/">Forward and backward propagation in neural networks</a></div><div class="more-item"><a class="title" href="/201911/KNN%E4%B8%8ENaive_Bayes%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/">Implementation of KNN and Naive_Bayes</a></div><div class="more-item"><a class="title" href="/201911/Fisher%E7%AE%97%E6%B3%95&SVM&K-Means%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96/">Fisher, SVM, K-Means and their optimization</a></div><div class="more-item"><a class="title" href="/201911/2019-11-12-price-prediction/">Price Suggestion Challenge - Text Processing and ML Algorithm</a></div><div class="more-item"><a class="title" href="/201904/%E5%BE%AA%E7%8E%AF%E8%B5%9B%E8%B5%9B%E7%A8%8B%E5%AE%89%E6%8E%92/">Round robin schedule</a></div></div></div>
 </div>
 
 
@@ -99,36 +100,36 @@
 
       
 
-<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a><span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E7%A4%BE%E5%8C%BA%E5%8F%91%E7%8E%B0/">社区发现</a></div><div id="post-meta">Posted on&nbsp;<time datetime="2019-04-17T02:48:50.000Z">2019-04-17</time></div></div>
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a><span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/Knowledge-Graph/">Knowledge Graph</a></div><div id="post-meta">Posted on&nbsp;<time datetime="2019-04-17T02:48:50.000Z">2019-04-17</time></div></div>
 
 <article class='content md post'>
-<h1 class="article-title"><span>基于链接内容的社区发现算法（二）</span></h1>
-<h1 id="Robust-Detection-of-Link-Communities-in-Large-Social-Network-by-Exploiting-Link-Semantics"><a href="#Robust-Detection-of-Link-Communities-in-Large-Social-Network-by-Exploiting-Link-Semantics" class="headerlink" title="Robust Detection of Link Communities in Large Social Network by Exploiting Link Semantics"></a>Robust Detection of Link Communities in Large Social Network by Exploiting Link Semantics</h1><div class="note primary">这一部分没什么难点，ppt里写的都很清楚了。。</div>
-
-<h3 id="三、试验"><a href="#三、试验" class="headerlink" title="三、试验"></a>三、试验</h3><h4 id="1-数据集"><a href="#1-数据集" class="headerlink" title="1.数据集"></a>1.数据集</h4><p>我们选择了两个数据集，包括美国安然能源公司内部的邮件内容（安然公司丑闻，加州能源危机）和Reddit新闻网站三天的的三个论坛的内容。如果用户A对用户B的帖子进行评论，就产生了一条从A到B的链接，链接内容为评论的内容。</p>
+<h1 class="article-title"><span>(Note) Robust detection of link communities in large social networks by exploiting link semantics - PART 2</span></h1>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><p>We selected two datasets, including the content of internal emails of the US energy company Enron (Enron scandal, California energy crisis) and the content of three forums of the news site Reddit over three days. If user A comments on user B’s post, A link is generated from A to B with the content of the comment.</p>
 <span id="more"></span>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/11/A7JUNd.md.png" alt="2.1"></p>
-<p>那么如何判断我们社区发现的结果是正确的呢？<br>对于第一个数据集，伯克利大学的学生已经将这些用户节点分成了11个用户社区，我们可以直接将社区发现的结果与这十一个社区比对。对于第二个数据集，我们可以直接将发现的社区和三个论坛内容相比较。</p>
+<p>So how can we tell if our community’s findings are correct?</p>
+<p>For the first dataset, Berkeley students have divided these user nodes into 11 user communities, and we can directly compare the results found by the communities with those 11 communities. For the second dataset, we can directly compare the found communities with the content of the three forums.</p>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/11/A7J03t.png" alt="2.2"></p>
-<h4 id="2-对比的方法"><a href="#2-对比的方法" class="headerlink" title="2.对比的方法"></a>2.对比的方法</h4><p>我们采取了8种最先进的社区发现算法，包括利用拓扑结构的、利用结点内容的、利用链接内容的、可重叠的、不可重叠的（可重叠的意思就是可以将一个用户结点放进多个社区里）等，如图：</p>
+<h3 id="The-method-of-comparison"><a href="#The-method-of-comparison" class="headerlink" title="The method of comparison"></a>The method of comparison</h3><p>We adopted 8 kinds of the most advanced community discovery algorithms, including the use of topology, the use of node content, the use of link content, overlapping, non-overlapping (overlapping means that a user node can be placed into multiple communities), etc., as shown in the figure.</p>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/11/A7JBgP.png" alt="2.3"></p>
-<h4 id="3-测评参数"><a href="#3-测评参数" class="headerlink" title="3.测评参数"></a>3.测评参数</h4><p>F-score和Jaccard similarity，用于测评相似度的两个参数，结果两个参数越大，说明社区发现的结果越好。</p>
+<h3 id="Evaluation-Indicators"><a href="#Evaluation-Indicators" class="headerlink" title="Evaluation Indicators"></a>Evaluation Indicators</h3><p>F-score and Jaccard similarity are two parameters used to evaluate the similarity. The larger the two parameters, the better the community discovery result.</p>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/11/A7JgEQ.png" alt="2.4"></p>
-<h4 id="4-结果"><a href="#4-结果" class="headerlink" title="4.结果"></a>4.结果</h4><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/11/A7JDjf.md.png" alt="2.5"></p>
+<h3 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h3><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/11/A7JDjf.md.png" alt="2.5"></p>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/11/A7J5vV.png" alt="2.6"></p>
-<h4 id="5-个例研究"><a href="#5-个例研究" class="headerlink" title="5.个例研究"></a>5.个例研究</h4><p>我们选择了Reddit网站2012年8月27号的数据集进行分析，与我们的方法对比的是SCI</p>
-<p>SCI方法的结果如下：</p>
+<h3 id="Case-study"><a href="#Case-study" class="headerlink" title="Case study"></a>Case study</h3><p>A dataset from Reddit dated August 27, 2012 was selected for our analysis, compared to SCI</p>
+<p>The results of the SCI method are as follows:</p>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/11/A7JyDS.png" alt="2.7"></p>
-<p>我们的方法：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/17/AxqfbT.jpg" alt="2.8"></p>
+<p>Our method:<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/17/AxqfbT.jpg" alt="2.8"></p>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/17/Axq4VU.png" alt="2.9"></p>
-<p>我们的方法还有一个好处，就是可以通过fai和Y找到社区的词云：</p>
+<p>Another benefit of our approach is that we can find the word cloud of the community through <script type="math/tex">fai</script> and <script type="math/tex">Y</script> :</p>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/11/A7JR4s.md.png" alt="2.10"></p>
-<p>我们方法的应用建议：</p>
+<p>Some suggestions:</p>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/11/A7Jh3q.png" alt="2.11"></p>
-<h3 id="四、结论"><a href="#四、结论" class="headerlink" title="四、结论"></a>四、结论</h3><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/11/A7JfCn.md.png" alt="2.12"></p>
-<p>这是文章的标题，下面我们对标题的关键词进行讨论和总结。<br>Robust:健壮性。在传统的方法中，当网络拓朴和话题群聚不重合的时候，方法的效率就会变得很低，而我们的方法将网络拓朴和话题群聚分开来讨论，具有一定的健壮性。</p>
-<p>Detection of Link Communities：本论文的主要内容——社区发现。</p>
-<p>Exploiting Link Semantics: 基于链接语义。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/11/A7JfCn.md.png" alt="2.12"></p>
+<p>This is the title of the article. Let’s discuss and summarize the keywords.</p>
+<p>Robust: In the traditional methods, when the network topology and topic clustering do not coincide, the efficiency of the method will become very low, but our method separates the network topology and topic clustering to discuss, which has a certain robustness.</p>
+<p>Detection of Link Communities: The main content of this thesis is community discovery.</p>
+<p>Exploiting the Link Semantics: based on Link Semantics.</p>
 
 
 <div class="article-footer reveal fs14"><section id="license"><div class="header"><span>License</span></div><div class="body"><p>This work is licensed under a <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a></p>
@@ -136,7 +137,7 @@
 
 </article>
 
-<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>READ NEXT</span></section><section class="body fs14"><a id="next" href="/201904/30%E5%A4%A9%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%8820%EF%BC%89/">30天自制操作系统（20）<span class="note">Older</span></a><div class="line"></div><a id="prev" href="/201904/%E5%9F%BA%E4%BA%8E%E9%93%BE%E6%8E%A5%E5%86%85%E5%AE%B9%E7%9A%84%E7%A4%BE%E5%8C%BA%E5%8F%91%E7%8E%B0%EF%BC%88%E4%B8%80%EF%BC%89/">基于链接内容的社区发现算法（一）<span class="note">Newer</span></a></section></div>
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>READ NEXT</span></section><section class="body fs14"><a id="next" href="/201904/%E5%BE%AA%E7%8E%AF%E8%B5%9B%E8%B5%9B%E7%A8%8B%E5%AE%89%E6%8E%92/">Round robin schedule<span class="note">Older</span></a><div class="line"></div><a id="prev" href="/201904/%E5%9F%BA%E4%BA%8E%E9%93%BE%E6%8E%A5%E5%86%85%E5%AE%B9%E7%9A%84%E7%A4%BE%E5%8C%BA%E5%8F%91%E7%8E%B0%EF%BC%88%E4%B8%80%EF%BC%89/">(Note) Robust detection of link communities in large social networks by exploiting link semantics - PART 1<span class="note">Newer</span></a></section></div>
 
 
 
@@ -157,6 +158,36 @@
     </div>
   </div>
 
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            processEscapes: true
+          }
+        });
+      </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+            tex2jax: {
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+          });
+      </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+              var all = MathJax.Hub.getAllJax(), i;
+              for(i=0; i < all.length; i += 1) {
+                  all[i].SourceElement().parentNode.className += ' has-jax';
+              }
+          });
+      </script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 
 

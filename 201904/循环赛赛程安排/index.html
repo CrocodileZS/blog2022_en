@@ -18,26 +18,26 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
-  <title>循环赛赛程安排 - Yuyang's Blog</title>
+  <title>Round robin schedule - Yuyang's Blog</title>
 
   
 
   
-    <meta name="description" content="一、问题重述设有n个运动员要进行网球循环赛。设计一个满足下列条件的比赛日程表：  每个选手必须与其他n-1个选手各赛一次； 每个选手一天只能赛一次； 当n是偶数时，循环赛进行n-1天。 当n是奇数时，循环赛进行n天。">
+    <meta name="description" content="There are n players to play a tennis round robin. Design a competition schedule that meets the following criteria:  Each player must play n − 1 other players once each;  Each player can only race once">
 <meta property="og:type" content="article">
-<meta property="og:title" content="循环赛赛程安排">
+<meta property="og:title" content="Round robin schedule">
 <meta property="og:url" content="https://enblog.crocodilezs.top/201904/%E5%BE%AA%E7%8E%AF%E8%B5%9B%E8%B5%9B%E7%A8%8B%E5%AE%89%E6%8E%92/index.html">
 <meta property="og:site_name" content="Yuyang&#39;s Blog">
-<meta property="og:description" content="一、问题重述设有n个运动员要进行网球循环赛。设计一个满足下列条件的比赛日程表：  每个选手必须与其他n-1个选手各赛一次； 每个选手一天只能赛一次； 当n是偶数时，循环赛进行n-1天。 当n是奇数时，循环赛进行n天。">
+<meta property="og:description" content="There are n players to play a tennis round robin. Design a competition schedule that meets the following criteria:  Each player must play n − 1 other players once each;  Each player can only race once">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://s2.ax1x.com/2019/04/13/ALTauj.jpg">
 <meta property="og:image" content="https://s2.ax1x.com/2019/04/13/ALb4Vs.jpg">
 <meta property="og:image" content="https://s2.ax1x.com/2019/04/13/ALb5an.jpg">
 <meta property="article:published_time" content="2019-04-13T12:48:50.000Z">
-<meta property="article:modified_time" content="2022-05-23T17:20:13.160Z">
+<meta property="article:modified_time" content="2022-08-27T14:18:29.343Z">
 <meta property="article:author" content="CrocodileZS">
-<meta property="article:tag" content="分治法">
-<meta name="twitter:card" content="summary">
+<meta property="article:tag" content="Divide and Conquer">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://s2.ax1x.com/2019/04/13/ALTauj.jpg">
   
   
@@ -78,9 +78,9 @@
 
 <div class="widgets">
 
-<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">TOC</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%97%AE%E9%A2%98%E9%87%8D%E8%BF%B0"><span class="toc-text">一、问题重述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="toc-text">二、问题分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%BD%93n%E6%98%AF2%E7%9A%84%E6%AC%A1%E5%B9%82%E6%97%B6"><span class="toc-text">1.当n是2的次幂时</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%BD%93n%E4%B8%8D%E6%98%AF2%E7%9A%84%E6%AC%A1%E5%B9%82%E6%97%B6"><span class="toc-text">2.当n不是2的次幂时</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BB%A3%E7%A0%81%E5%B1%95%E7%A4%BA"><span class="toc-text">三、代码展示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%B5%8B%E8%AF%95%E7%A8%8B%E5%BA%8F"><span class="toc-text">四、测试程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="toc-text">五、实验结果</span></a></li></ol></div></div></div>
+<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">TOC</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Analysis"><span class="toc-text">Analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#When-n-is-a-power-of-two"><span class="toc-text">When n is a power of two</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#When-n-is-not-a-power-of-two"><span class="toc-text">When n is not a power of two</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Code"><span class="toc-text">Code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Test"><span class="toc-text">Test</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Result"><span class="toc-text">Result</span></a></li></ol></div></div></div>
 
-<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">Recent Update</span><a class="cap-action" id="rss" title="Subscribe" href="atom.xml"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8938"><path d="M800.966 947.251c0-404.522-320.872-732.448-716.69-732.448V62.785c477.972 0 865.44 395.987 865.44 884.466h-148.75z m-162.273 0h-148.74c0-228.98-181.628-414.598-405.678-414.598v-152.01c306.205 0 554.418 253.68 554.418 566.608z m-446.24-221.12c59.748 0 108.189 49.503 108.189 110.557 0 61.063-48.44 110.563-108.188 110.563-59.747 0-108.18-49.5-108.18-110.563 0-61.054 48.433-110.556 108.18-110.556z" p-id="8939"></path></svg></a></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/202110/2021-10-02-REC-trading/">A Renewable Energy Certificate Trading System Based on Blockchain</a></div><div class="more-item"><a class="title" href="/201911/2019-11-12-price-prediction/">Price Suggestion Challenge - A ML Algorithms Survey</a></div><div class="more-item"><a class="title" href="/202111/%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9%E5%BD%92%E6%A1%A3%E5%92%8C%E8%8B%B1%E6%96%87%E5%8D%9A%E5%AE%A2/">博客内容归档和英文博客</a></div><div class="more-item"><a class="title" href="/201909/%E5%AE%9E%E9%AA%8C%E5%AE%A4%E8%8B%A6%E9%80%BC%E6%90%AC%E7%A0%96%E6%9A%91%E5%81%87%E7%94%9F%E6%B4%BB%E7%BA%AA%E5%AE%9E/">实验室苦逼搬砖暑假生活纪实</a></div><div class="more-item"><a class="title" href="/201909/%E3%80%8C%E5%AD%A6%E7%94%9F%E5%AE%BF%E8%88%8D%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E3%80%8D%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/">「学生宿舍管理系统」实验报告</a></div></div></div>
+<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">Recent Update</span><a class="cap-action" id="rss" title="Subscribe" href="atom.xml"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8938"><path d="M800.966 947.251c0-404.522-320.872-732.448-716.69-732.448V62.785c477.972 0 865.44 395.987 865.44 884.466h-148.75z m-162.273 0h-148.74c0-228.98-181.628-414.598-405.678-414.598v-152.01c306.205 0 554.418 253.68 554.418 566.608z m-446.24-221.12c59.748 0 108.189 49.503 108.189 110.557 0 61.063-48.44 110.563-108.188 110.563-59.747 0-108.18-49.5-108.18-110.563 0-61.054 48.433-110.556 108.18-110.556z" p-id="8939"></path></svg></a></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/201911/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%BD%9C%E4%B8%9A%E6%8A%A5%E5%91%8A/">Forward and backward propagation in neural networks</a></div><div class="more-item"><a class="title" href="/201911/KNN%E4%B8%8ENaive_Bayes%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/">Implementation of KNN and Naive_Bayes</a></div><div class="more-item"><a class="title" href="/201911/Fisher%E7%AE%97%E6%B3%95&SVM&K-Means%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96/">Fisher, SVM, K-Means and their optimization</a></div><div class="more-item"><a class="title" href="/201911/2019-11-12-price-prediction/">Price Suggestion Challenge - Text Processing and ML Algorithm</a></div><div class="more-item"><a class="title" href="/201904/%E5%BE%AA%E7%8E%AF%E8%B5%9B%E8%B5%9B%E7%A8%8B%E5%AE%89%E6%8E%92/">Round robin schedule</a></div></div></div>
 </div>
 
 
@@ -90,28 +90,100 @@
 
       
 
-<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a><span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></div><div id="post-meta">Posted on&nbsp;<time datetime="2019-04-13T12:48:50.000Z">2019-04-13</time></div></div>
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a><span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/Algorithm/">Algorithm</a> <span class="sep"></span> <a class="cap breadcrumb-link" href="/categories/Algorithm/Divide-and-Conquer/">Divide and Conquer</a></div><div id="post-meta">Posted on&nbsp;<time datetime="2019-04-13T12:48:50.000Z">2019-04-13</time></div></div>
 
 <article class='content md post'>
-<h1 class="article-title"><span>循环赛赛程安排</span></h1>
-<h2 id="一、问题重述"><a href="#一、问题重述" class="headerlink" title="一、问题重述"></a>一、问题重述</h2><p>设有n个运动员要进行网球循环赛。设计一个满足下列条件的比赛日程表：</p>
+<h1 class="article-title"><span>Round robin schedule</span></h1>
+<p>There are <script type="math/tex">n</script> players to play a tennis round robin. Design a competition schedule that meets the following criteria:</p>
 <ul>
-<li>每个选手必须与其他n-1个选手各赛一次；</li>
-<li>每个选手一天只能赛一次；</li>
-<li>当n是偶数时，循环赛进行n-1天。</li>
-<li>当n是奇数时，循环赛进行n天。</li>
+<li><p>Each player must play <script type="math/tex">n − 1</script> other players once each;</p>
+</li>
+<li><p>Each player can only race once a day;</p>
+</li>
+<li><p>When <script type="math/tex">n</script> is even, the round robin is played for <script type="math/tex">n − 1</script> days.</p>
+</li>
+<li><p>When <script type="math/tex">n</script> is odd, the round robin is played for <script type="math/tex">n</script> days.</p>
+</li>
 </ul>
 <span id="more"></span>
-<h2 id="二、问题分析"><a href="#二、问题分析" class="headerlink" title="二、问题分析"></a>二、问题分析</h2><h4 id="1-当n是2的次幂时"><a href="#1-当n是2的次幂时" class="headerlink" title="1.当n是2的次幂时"></a>1.当n是2的次幂时</h4><p> $ n=2^k,k=1,2,3,4… $时，此时问题比较简单。按照==分治==的策略，可将所有参赛的选手分为两部分，$ n＝2k $个选手的比赛日程表可以通过为 $ n/2＝2k-1 $ 个选手设计的比赛日程表来决定。递归地执行这种分割，直到只剩下 2 个选手时，比赛日程表的制定就变得很简单：只要让这 2 个选手进行比赛就可以了。再逐步合并子问题的解即可得到原问题的解。<br> 示意图如下：</p>
+<h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><h3 id="When-n-is-a-power-of-two"><a href="#When-n-is-a-power-of-two" class="headerlink" title="When n is a power of two"></a>When n is a power of two</h3><p> When <script type="math/tex">n=2^k,k=1,2,3,4...</script>, it is easy. We can divide players into 2 parts. The schedule of <script type="math/tex">n＝2k</script> players can be done by the schedule of <script type="math/tex">n/2＝2k-1</script>. Perform the split recursively until there are only two players left, and the schedule is simple: just let the two players play each other. Then the solution of the original problem can be obtained by gradually merging the solutions of the subproblems.</p>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/13/ALTauj.jpg" alt="1.1"></p>
-<p>此时的分治算法如下所示:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">void tourna(int n) //基本的分治算法</span><br><span class="line">&#123;</span><br><span class="line">    if(n==1)&#123;a[0][0]=1;return;&#125;</span><br><span class="line">    tourna(n/2); //分治</span><br><span class="line">    copy(n); //合并</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void copy(int n)</span><br><span class="line">&#123;</span><br><span class="line">    int m=n/2;</span><br><span class="line">    for(int i=0;i&lt;m;i++)</span><br><span class="line">    for(int j=0;j&lt;m;j++)&#123;</span><br><span class="line">        //由左上角小块的值算出对应的右上角小块的值</span><br><span class="line">        a[i][j+m]=a[i][j]+m;</span><br><span class="line">        //由右上角小块的值算出对应的左下角小块的值</span><br><span class="line">        a[i+m][j]=a[i][j+m];</span><br><span class="line">        //由左上角小块的值算出对应的右下角小块的值</span><br><span class="line">        a[i+m][j+m]=a[i][j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>我们用a[i][j]表示第i支队伍在第j天遇到的对手。</p>
-<h4 id="2-当n不是2的次幂时"><a href="#2-当n不是2的次幂时" class="headerlink" title="2.当n不是2的次幂时"></a>2.当n不是2的次幂时</h4><p>下面讨论当n不是2的次幂时的情况。<br>我们发现当n为奇数时，每天必定有一支队伍轮空。此时我们==假定还有一只不存在的队伍与轮空的队伍比赛==，将我们的奇偶数情况的模型统一。此时n的赛程表与偶数n+1时的赛程表是相似的。<br>比如，当n=4时<br>| 0 | 1 | 2 | 3 |<br>|—-|—-|—-|—-|<br>| 1 | 0 | 3 | 2 |<br>| 2 | 3 | 0 | 1 |<br>| 3 | 2 | 1 | 0 |</p>
-<p>当n=3时<br>| 0 | 1 | 2 | / |<br>|—-|—-|—-|—-|<br>| 1 | 0 | / | 2 |<br>| 2 | / | 0 | 1 |<br>| / | 2 | 1 | 0 |</p>
-<p>(删去最后一行)其中“/”表示轮空。</p>
-<p>综上，当遇到n为奇数的情况，我们便可以转化为偶数来考虑。</p>
-<p>接下来我们遇到问题的难点==矩阵的合并==<br>当n/2为偶数时，合并比较容易，就像$ n=2^k $那样。<br>下面我们来考虑n/2为奇数的情况。<br>此时合并的过程我参考了<a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhuyijie/p/6465812.html">猪一戒的博客</a></p>
-<p>我们考虑当n=6时的情况。<br>我们先将6个人分成2组，每组3个人（[0，1,2],[3,4,5]），然后发现3是个奇数，然后在每组中+1个虚拟人：X和Y；这样，每组就变成了4个人，然后将这4个人在除以2，我们就得到了一个两两组合的小的组。</p>
-<p>首先来看[0，1]; [2,x]</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">void tourna(int n) //基本的分治算法</span><br><span class="line">&#123;</span><br><span class="line">    if(n==1)&#123;a[0][0]=1;return;&#125;</span><br><span class="line">    tourna(n/2); //分治</span><br><span class="line">    copy(n); //合并</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void copy(int n)</span><br><span class="line">&#123;</span><br><span class="line">    int m=n/2;</span><br><span class="line">    for(int i=0;i&lt;m;i++)</span><br><span class="line">    for(int j=0;j&lt;m;j++)&#123;</span><br><span class="line">        //由左上角小块的值算出对应的右上角小块的值</span><br><span class="line">        a[i][j+m]=a[i][j]+m;</span><br><span class="line">        //由右上角小块的值算出对应的左下角小块的值</span><br><span class="line">        a[i+m][j]=a[i][j+m];</span><br><span class="line">        //由左上角小块的值算出对应的右下角小块的值</span><br><span class="line">        a[i+m][j+m]=a[i][j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>tips: <script type="math/tex">a[i][j]</script> means the rival that the <script type="math/tex">i</script> th player meet in day <script type="math/tex">j</script>.</p>
+<h3 id="When-n-is-not-a-power-of-two"><a href="#When-n-is-not-a-power-of-two" class="headerlink" title="When n is not a power of two"></a>When n is not a power of two</h3><p>Let’s talk about what happens when n is not a power of two.</p>
+<p>We find that when n is odd, there must be one team empty every day. At this point we assume that there is another non-existent team playing against the empty team, unifying our model for the Odd-even case. The schedule for <script type="math/tex">n</script> is similar to the schedule for even <script type="math/tex">n+1</script>.<br>For example, when <script type="math/tex">n=4</script>: </p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>3</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>When <script type="math/tex">n=3</script></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>/</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>/</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>/</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>/</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To sum up, when n is odd, we can convert it to even.</p>
+<p>Next we have the difficult problem of combining matrices.</p>
+<p>When <script type="math/tex">n/2</script> is even, it is like when <script type="math/tex">n=2^k</script></p>
+<p>When <script type="math/tex">n/2</script> is odd, I referenced <a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhuyijie/p/6465812.html">猪一戒的博客</a></p>
+<p>Let’s think about what happens when n is equal to 6.</p>
+<p>We divide six people into two groups of three ([0,1,2],[3,4,5]), and then find that three is an odd number. Then we add one dummy in each group: X and Y; So you have four people in each group, and you divide those four people by two, and you get a small group of pairwise pairs.</p>
+<p>Firstly, we see [0，1]; [2,x]</p>
 <div class="table-container">
 <table>
 <thead>
@@ -144,7 +216,7 @@
 </tbody>
 </table>
 </div>
-<p>将这两组合起来：</p>
+<p>Combine these two:</p>
 <div class="table-container">
 <table>
 <thead>
@@ -177,7 +249,7 @@
 </tbody>
 </table>
 </div>
-<p>这里要得到3个选手的比赛安排，所以，我们将假想的X去掉，并将它的位置以/代替：</p>
+<p>Here, we want to get a match arrangement of 3 players, so we drop the imaginary X and replace its position with / :</p>
 <div class="table-container">
 <table>
 <thead>
@@ -204,9 +276,35 @@
 </tbody>
 </table>
 </div>
-<p>然后我们也按照这个规律，安排[3,4,5]的日程，得到表格<br>| 3 | 4 | 5 | / |<br>|—-|—-|—-|—-|<br>| 4 | 3 | / | 5 |<br>| 5 | / | 3 | 4 |</p>
-<p>我们得到了两个3x4的矩阵（其中第一列表示每个队伍，实际上只有三天），我们最终想得到6*6（其中第一列表示每个队伍，实际上只有五天）的矩阵。</p>
-<p>我们先将上面两个矩阵合并</p>
+<p>Then we also follow this rule, schedule [3,4,5].</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>/</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>3</td>
+<td>/</td>
+<td>5</td>
+</tr>
+<tr>
+<td>5</td>
+<td>/</td>
+<td>3</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We have two 3x4 matrices (where the first column represents each team, which is really only three days), and we end up with a 6 by 6 matrix (where the first column represents each team, which is really only five days).</p>
+<p>So let’s just merge the top two matrices.</p>
 <div class="table-container">
 <table>
 <thead>
@@ -262,7 +360,7 @@
 </tbody>
 </table>
 </div>
-<p> 前三天的比赛已经基本排完了，我们只需要在斜杠/的地方填上相应的比赛。很显然可以让每天轮空的两支队伍比赛。（在程序中没有斜杠表示，还是假想的队伍，方便进行监测）</p>
+<p>The races for the first three days are almost finished, we just need to fill in the corresponding races in the slash /. Obviously, you could have two teams playing each other every day. (There are no slashes in the program, or imaginary teams, for easy monitoring)</p>
 <div class="table-container">
 <table>
 <thead>
@@ -318,7 +416,7 @@
 </tbody>
 </table>
 </div>
-<p>上面的矩阵中[0,1,2]和[3,4,5]组内已经比完了，组间比了一次，剩下的只需要轮换两次即可得到后两天的比赛情况。</p>
+<p>In the matrix above, [0,1,2] and [3,4,5] have been compared within the group, and the group has been compared once, and the rest only need to rotate twice to get the match situation of the next two days.</p>
 <div class="table-container">
 <table>
 <thead>
@@ -375,25 +473,27 @@
 </tbody>
 </table>
 </div>
-<p>于是我们便可以得到两个奇数矩阵的合并情况。</p>
-<p>在程序中，我们的思路不是严格意义上的所谓的“合并”，而是“扩展”。比如对于“合并2个3x4的矩阵”，我们是“将1个3x4的矩阵扩展为6x6的矩阵”（因为这两个3x4的矩阵规格相同，排序顺序一样，所以只需要做一遍）</p>
-<h2 id="三、代码展示"><a href="#三、代码展示" class="headerlink" title="三、代码展示"></a>三、代码展示</h2><p>（代码里有一些打印行号的printf语句，不知道为啥一去掉就过不了编译，所以没有删掉。。）<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#include&quot;Check.cpp&quot;</span><br><span class="line"></span><br><span class="line">void copy(int n, int **a)//偶数情况</span><br><span class="line">&#123;</span><br><span class="line">	//printf(&quot;当前行号%05d\n&quot;,__LINE__);</span><br><span class="line">	int m=n/2;</span><br><span class="line">	for(int i=0;i&lt;m;i++)&#123;</span><br><span class="line">		for(int j=0;j&lt;m;j++)&#123;</span><br><span class="line">			//由左上角小块的值算出对应的右上角小块的值</span><br><span class="line">			a[i][j+m]=a[i][j]+m;</span><br><span class="line">			//由右上角小块的值算出对应的左下角小块的值</span><br><span class="line">			a[i+m][j]=a[i][j+m];</span><br><span class="line">			//由左上角小块的值算出对应的右下角小块的值</span><br><span class="line">			a[i+m][j+m]=a[i][j];</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void copyodd(int n, int **a) // n/2 为奇数时的合并算法</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;当前行号%05d\n&quot;,__LINE__);</span><br><span class="line">	int m=n/2;</span><br><span class="line">	int b[m];</span><br><span class="line">	for(int i=0;i&lt;m;i++)&#123;</span><br><span class="line">		b[i]=m+i;</span><br><span class="line">		b[m+i]=b[i];</span><br><span class="line">	&#125;</span><br><span class="line">	for(int i=0;i&lt;m;i++)&#123;</span><br><span class="line">		//由左上角小块的值算出相应的左下角小块的值</span><br><span class="line">		for(int j=0;j&lt;m+1;j++)&#123;</span><br><span class="line">			if(a[i][j]&gt;=m)&#123;</span><br><span class="line">				a[i][j]=b[i];</span><br><span class="line">				a[m+i][j]=(b[i]+m)%n;</span><br><span class="line">			&#125;	else a[m+i][j]=a[i][j]+m;</span><br><span class="line">		&#125;</span><br><span class="line">		//由左上角小块的值算出相应的右上角和右下角小块的值</span><br><span class="line">		for(int j=1;j&lt;m;j++)&#123;</span><br><span class="line">			a[i][m+j]=b[i+j];</span><br><span class="line">			a[b[i+j]][m+j]=i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void merge(int n, int **a) //合并算法</span><br><span class="line">&#123;</span><br><span class="line">	if((n/2)&gt;1 &amp;&amp; (n/2)%2 == 1) copyodd(n,a); //n/2 为奇数时,注意是 (n/2)%2 == 1，n别忘了/2 </span><br><span class="line">	else copy(n,a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void tournament(int n, int **a) //循环赛算法</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;当前行号%05d\n&quot;,__LINE__);</span><br><span class="line">	if(n==1)&#123;a[0][0]=0;return;&#125;</span><br><span class="line">	if(n%2 == 1)	&#123;tournament(n+1,a);return;&#125; //n为奇数，分治</span><br><span class="line">	tournament(n/2,a); //n为偶数，分治</span><br><span class="line">	merge(n,a); //合并</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br><span class="line">&#123;</span><br><span class="line">	int n;</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">	</span><br><span class="line">	//创建数组</span><br><span class="line">	int **a;</span><br><span class="line">	a = (int**)malloc(sizeof(int*)*n);</span><br><span class="line">	</span><br><span class="line">	if(n%2==1)&#123;</span><br><span class="line">		for(int i=0; i&lt;n+1; i++)	a[i] = (int*)malloc(sizeof(int)*(n+1));</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		for(int i=0; i&lt;n; i++)	a[i] = (int*)malloc(sizeof(int)*n);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//生成循坏赛矩阵</span><br><span class="line">	tournament(n,a);</span><br><span class="line">	</span><br><span class="line">	//打印</span><br><span class="line">	printf(&quot;当前行号:%05d\n&quot;,__LINE__);</span><br><span class="line">	for(int i=0; i&lt;n; i++)&#123;</span><br><span class="line">		for(int j=1; j&lt;(n%2 == 1 ? n+1 : n); j++)&#123;</span><br><span class="line">			if(a[i][j]&lt;n)	printf(&quot;%d &quot;,a[i][j]);</span><br><span class="line">			else printf(&quot;x &quot;);</span><br><span class="line">		&#125;</span><br><span class="line">		printf(&quot;\n&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//检验程序</span><br><span class="line">	if(Check(a,n)==1) printf(&quot;This gametable is availuable.\n&quot;);</span><br><span class="line">	else printf(&quot;This gametable is unavailuable.\n&quot;);</span><br><span class="line">	if(n%2 ==1)&#123;</span><br><span class="line">		for(int i=0; i&lt;n; i++)	free(a[i]);</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		for(int i=0; i&lt;n+1; i++)	free(a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	free(a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="四、测试程序"><a href="#四、测试程序" class="headerlink" title="四、测试程序"></a>四、测试程序</h2><p>测试程序对我们生成的矩阵进行检验。从两个角度进行。</p>
+<p>So we can get the combination of two odd matrices.</p>
+<p>In the program, our thinking is not strictly “merge”, but “extend”. For example, for “merging two 3x4 matrices”, we are “expanding one 3x4 matrix into a 6x6 matrix” (because the two 3x4 matrices have the same size and the same sorting order, so we only need to do it once).</p>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#include&quot;Check.cpp&quot;</span><br><span class="line"></span><br><span class="line">void copy(int n, int **a)//偶数情况</span><br><span class="line">&#123;</span><br><span class="line">	//printf(&quot;当前行号%05d\n&quot;,__LINE__);</span><br><span class="line">	int m=n/2;</span><br><span class="line">	for(int i=0;i&lt;m;i++)&#123;</span><br><span class="line">		for(int j=0;j&lt;m;j++)&#123;</span><br><span class="line">			//由左上角小块的值算出对应的右上角小块的值</span><br><span class="line">			a[i][j+m]=a[i][j]+m;</span><br><span class="line">			//由右上角小块的值算出对应的左下角小块的值</span><br><span class="line">			a[i+m][j]=a[i][j+m];</span><br><span class="line">			//由左上角小块的值算出对应的右下角小块的值</span><br><span class="line">			a[i+m][j+m]=a[i][j];</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void copyodd(int n, int **a) // n/2 为奇数时的合并算法</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;当前行号%05d\n&quot;,__LINE__);</span><br><span class="line">	int m=n/2;</span><br><span class="line">	int b[m];</span><br><span class="line">	for(int i=0;i&lt;m;i++)&#123;</span><br><span class="line">		b[i]=m+i;</span><br><span class="line">		b[m+i]=b[i];</span><br><span class="line">	&#125;</span><br><span class="line">	for(int i=0;i&lt;m;i++)&#123;</span><br><span class="line">		//由左上角小块的值算出相应的左下角小块的值</span><br><span class="line">		for(int j=0;j&lt;m+1;j++)&#123;</span><br><span class="line">			if(a[i][j]&gt;=m)&#123;</span><br><span class="line">				a[i][j]=b[i];</span><br><span class="line">				a[m+i][j]=(b[i]+m)%n;</span><br><span class="line">			&#125;	else a[m+i][j]=a[i][j]+m;</span><br><span class="line">		&#125;</span><br><span class="line">		//由左上角小块的值算出相应的右上角和右下角小块的值</span><br><span class="line">		for(int j=1;j&lt;m;j++)&#123;</span><br><span class="line">			a[i][m+j]=b[i+j];</span><br><span class="line">			a[b[i+j]][m+j]=i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void merge(int n, int **a) //合并算法</span><br><span class="line">&#123;</span><br><span class="line">	if((n/2)&gt;1 &amp;&amp; (n/2)%2 == 1) copyodd(n,a); //n/2 为奇数时,注意是 (n/2)%2 == 1，n别忘了/2 </span><br><span class="line">	else copy(n,a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void tournament(int n, int **a) //循环赛算法</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;当前行号%05d\n&quot;,__LINE__);</span><br><span class="line">	if(n==1)&#123;a[0][0]=0;return;&#125;</span><br><span class="line">	if(n%2 == 1)	&#123;tournament(n+1,a);return;&#125; //n为奇数，分治</span><br><span class="line">	tournament(n/2,a); //n为偶数，分治</span><br><span class="line">	merge(n,a); //合并</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br><span class="line">&#123;</span><br><span class="line">	int n;</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">	</span><br><span class="line">	//创建数组</span><br><span class="line">	int **a;</span><br><span class="line">	a = (int**)malloc(sizeof(int*)*n);</span><br><span class="line">	</span><br><span class="line">	if(n%2==1)&#123;</span><br><span class="line">		for(int i=0; i&lt;n+1; i++)	a[i] = (int*)malloc(sizeof(int)*(n+1));</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		for(int i=0; i&lt;n; i++)	a[i] = (int*)malloc(sizeof(int)*n);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//生成循坏赛矩阵</span><br><span class="line">	tournament(n,a);</span><br><span class="line">	</span><br><span class="line">	//打印</span><br><span class="line">	printf(&quot;当前行号:%05d\n&quot;,__LINE__);</span><br><span class="line">	for(int i=0; i&lt;n; i++)&#123;</span><br><span class="line">		for(int j=1; j&lt;(n%2 == 1 ? n+1 : n); j++)&#123;</span><br><span class="line">			if(a[i][j]&lt;n)	printf(&quot;%d &quot;,a[i][j]);</span><br><span class="line">			else printf(&quot;x &quot;);</span><br><span class="line">		&#125;</span><br><span class="line">		printf(&quot;\n&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//检验程序</span><br><span class="line">	if(Check(a,n)==1) printf(&quot;This gametable is availuable.\n&quot;);</span><br><span class="line">	else printf(&quot;This gametable is unavailuable.\n&quot;);</span><br><span class="line">	if(n%2 ==1)&#123;</span><br><span class="line">		for(int i=0; i&lt;n; i++)	free(a[i]);</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		for(int i=0; i&lt;n+1; i++)	free(a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	free(a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p>The test program checks the matrix we generated. There are two ways to do it.</p>
 <ul>
-<li>每个队伍都要和其他队伍进行一场比赛</li>
-<li>每个队伍每天仅进行一场比赛</li>
+<li><p>Each team will play a match against the other teams</p>
+</li>
+<li><p>Each team will play only one match per day</p>
+</li>
 </ul>
-<p>测试程序代码如下<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int Check(int **a, int n)</span><br><span class="line">&#123;</span><br><span class="line">	int column;</span><br><span class="line">	if(n%2==1) column=n+1;</span><br><span class="line">	else column=n;</span><br><span class="line">	int flag=0;</span><br><span class="line">	int check=1;//check为0说明不符合条件，停止检验。 </span><br><span class="line">	//检验每个队伍都与其他队伍比赛 </span><br><span class="line">	for(int i=0; i&lt;n&amp;&amp;check==1; i++)&#123;</span><br><span class="line">		for(int k=0; k&lt;n&amp;&amp;check==1; k++)&#123;</span><br><span class="line">			flag=0;</span><br><span class="line">			for(int j=0;j&lt;column&amp;&amp;flag==0;j++)&#123;</span><br><span class="line">				if(a[i][j] == k) flag=1;</span><br><span class="line">			&#125;</span><br><span class="line">			if(flag==0) check=0;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	//检验某天是否有队伍重复比赛</span><br><span class="line">	int times[n];</span><br><span class="line">	for(int j=1; j&lt;column&amp;&amp;check==1; j++)&#123;</span><br><span class="line">		for(int w=0; w&lt;n; w++) times[w]=0;</span><br><span class="line">		for(int i=0; i&lt;n&amp;&amp;check==1; i++)&#123;</span><br><span class="line">			times[a[i][j]]++;</span><br><span class="line">			if(times[a[i][j]]&gt;=2) check==0;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; </span><br><span class="line">	if(check==1) return 1;</span><br><span class="line">	else return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="五、实验结果"><a href="#五、实验结果" class="headerlink" title="五、实验结果"></a>五、实验结果</h2><ul>
-<li>当n=6时</li>
+<p>The test program code is as follows.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int Check(int **a, int n)</span><br><span class="line">&#123;</span><br><span class="line">	int column;</span><br><span class="line">	if(n%2==1) column=n+1;</span><br><span class="line">	else column=n;</span><br><span class="line">	int flag=0;</span><br><span class="line">	int check=1;//check为0说明不符合条件，停止检验。 </span><br><span class="line">	//检验每个队伍都与其他队伍比赛 </span><br><span class="line">	for(int i=0; i&lt;n&amp;&amp;check==1; i++)&#123;</span><br><span class="line">		for(int k=0; k&lt;n&amp;&amp;check==1; k++)&#123;</span><br><span class="line">			flag=0;</span><br><span class="line">			for(int j=0;j&lt;column&amp;&amp;flag==0;j++)&#123;</span><br><span class="line">				if(a[i][j] == k) flag=1;</span><br><span class="line">			&#125;</span><br><span class="line">			if(flag==0) check=0;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	//检验某天是否有队伍重复比赛</span><br><span class="line">	int times[n];</span><br><span class="line">	for(int j=1; j&lt;column&amp;&amp;check==1; j++)&#123;</span><br><span class="line">		for(int w=0; w&lt;n; w++) times[w]=0;</span><br><span class="line">		for(int i=0; i&lt;n&amp;&amp;check==1; i++)&#123;</span><br><span class="line">			times[a[i][j]]++;</span><br><span class="line">			if(times[a[i][j]]&gt;=2) check==0;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; </span><br><span class="line">	if(check==1) return 1;</span><br><span class="line">	else return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h2><ul>
+<li>When <script type="math/tex">n=6</script></li>
 </ul>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/13/ALb4Vs.jpg" alt="1.2"></p>
 <ul>
-<li>当n=9时</li>
+<li>When <script type="math/tex">n=9</script></li>
 </ul>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.ax1x.com/2019/04/13/ALb5an.jpg" alt="1.3"></p>
-<p>测试结果均正确。</p>
-<p><em>参考文献</em><br><em>[1]王民川,田永轩.分治法在循环赛日程表设计中的应用[J].光盘技术,2009(05):45-46.</em></p>
+<p>They are all correct.</p>
 
 
 <div class="article-footer reveal fs14"><section id="license"><div class="header"><span>License</span></div><div class="body"><p>This work is licensed under a <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a></p>
@@ -401,7 +501,7 @@
 
 </article>
 
-<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>READ NEXT</span></section><section class="body fs14"><a id="next" href="/201904/30%E5%A4%A9%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%8818%EF%BC%89/">30天自制操作系统（18）<span class="note">Older</span></a><div class="line"></div><a id="prev" href="/201904/30%E5%A4%A9%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%8819%EF%BC%89/">30天自制操作系统（19）<span class="note">Newer</span></a></section></div>
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>READ NEXT</span></section><section class="body fs14"><a id="next" href="/201904/%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E5%92%8C%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/">Insert Sort, Merge Sort and Quick Sort<span class="note">Older</span></a><div class="line"></div><a id="prev" href="/201904/%E5%9F%BA%E4%BA%8E%E9%93%BE%E6%8E%A5%E5%86%85%E5%AE%B9%E7%9A%84%E7%A4%BE%E5%8C%BA%E5%8F%91%E7%8E%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">(Note) Robust detection of link communities in large social networks by exploiting link semantics - PART 2<span class="note">Newer</span></a></section></div>
 
 
 
@@ -422,6 +522,36 @@
     </div>
   </div>
 
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            processEscapes: true
+          }
+        });
+      </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+            tex2jax: {
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+          });
+      </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+              var all = MathJax.Hub.getAllJax(), i;
+              for(i=0; i < all.length; i += 1) {
+                  all[i].SourceElement().parentNode.className += ' has-jax';
+              }
+          });
+      </script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 
 
