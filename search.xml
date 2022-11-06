@@ -11,22 +11,25 @@
 <h2 id="Construct-the-query"><a href="#Construct-the-query" class="headerlink" title="Construct the query"></a>Construct the query</h2><p>They final query is complicated, so we start trying to decompose it.<br>Final query:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT DISTINCT ?label ?property ?propertynameLabel ?value ?valueLabel</span><br><span class="line">WHERE &#123;</span><br><span class="line">    wd:Q584184 ?property ?value .</span><br><span class="line">    wd:Q584184 rdfs:label ?label .</span><br><span class="line">    SERVICE wikibase:label &#123; bd:serviceParam wikibase:language &quot;en&quot; &#125;</span><br><span class="line">    ?propertyname wikibase:directClaim ?property</span><br><span class="line">    FILTER (STRSTARTS(STR(?property), &quot;http://www.wikidata.org/prop/direct&quot;))</span><br><span class="line">    FILTER (STRSTARTS(STR(?value), &quot;http://www.wikidata.org/entity&quot;))</span><br><span class="line">    FILTER (langMatches(lang(?label), &quot;EN&quot;))              </span><br><span class="line">&#125; limit 20</span><br></pre></td></tr></table></figure></p>
 <p>At first, we could make a simple query.</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT DISTINCT ?property ?value </span><br><span class="line">WHERE &#123;</span><br><span class="line">    wd:Q584184 ?property ?value .</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>The result is shown below:<br><img src="https://bu.dusays.com/2022/08/29/630cbe380a642.png" alt=""><br>We can only find the wikidata id of object and predicate. Now we try to find what the wikidata id means.</p>
+<p>The result is shown below:</p>
+<p><img src="https://imgurlcrcz.oss-cn-hangzhou.aliyuncs.com/img/20221106235721.png" alt=""></p>
+<p>We can only find the wikidata id of object and predicate. Now we try to find what the wikidata id means.</p>
 <hr>
 <p>Find the object label:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT DISTINCT ?property ?value ?valueLabel</span><br><span class="line">WHERE &#123;</span><br><span class="line">wd:Q584184 ?property ?value .</span><br><span class="line">SERVICE wikibase:label &#123; bd:serviceParam wikibase:language &quot;en&quot; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>We could get the result:<br><img src="https://bu.dusays.com/2022/08/29/630cbde8175b5.png" alt=""></p>
+<p>We could get the result:</p>
+<p><img src="https://imgurlcrcz.oss-cn-hangzhou.aliyuncs.com/img/20221107000123.png" alt=""></p>
 <p>Find the predicate label:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT DISTINCT ?property ?propertynameLabel ?value ?valueLabel</span><br><span class="line">WHERE &#123;</span><br><span class="line">    wd:Q584184 ?property ?value .</span><br><span class="line">    SERVICE wikibase:label &#123; bd:serviceParam wikibase:language &quot;en&quot; &#125;</span><br><span class="line">    ?propertyname wikibase:directClaim ?property</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Result:<br><img src="https://bu.dusays.com/2022/08/29/630cbfe1cf6a4.png" alt=""></p>
+<p>Result:<br><img src="https://imgurlcrcz.oss-cn-hangzhou.aliyuncs.com/img/20221106235659.png" alt=""></p>
 <hr>
 <p>We want to get the subgraph of the specific entity <code>Bert</code>. But now there are many numbers and strings in the result. For example, the FAST ID of Bert is 830807. Obviously, 830807 is not an entity and we only want entities in our object results. So we need to limit the prefix of the predicate and object.</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT DISTINCT ?property ?propertynameLabel ?value ?valueLabel</span><br><span class="line">WHERE &#123;</span><br><span class="line">    wd:Q584184 ?property ?value .</span><br><span class="line">    SERVICE wikibase:label &#123; bd:serviceParam wikibase:language &quot;en&quot; &#125;</span><br><span class="line">    ?propertyname wikibase:directClaim ?property</span><br><span class="line">    FILTER (STRSTARTS(STR(?property), &quot;http://www.wikidata.org/prop/direct&quot;))</span><br><span class="line">    FILTER (STRSTARTS(STR(?value), &quot;http://www.wikidata.org/entity&quot;))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://bu.dusays.com/2022/08/29/630cc15c247bc.png" alt=""></p>
+<p><img src="https://imgurlcrcz.oss-cn-hangzhou.aliyuncs.com/img/20221106235400.png" alt=""></p>
 <p>We can see that we filter the number objects out.</p>
 <hr>
 <p>Finally, we get the label (english) of subject.</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT DISTINCT ?label ?property ?propertynameLabel ?value ?valueLabel</span><br><span class="line">WHERE &#123;</span><br><span class="line">    wd:Q584184 ?property ?value .</span><br><span class="line">    wd:Q584184 rdfs:label ?label .</span><br><span class="line">    SERVICE wikibase:label &#123; bd:serviceParam wikibase:language &quot;en&quot; &#125;</span><br><span class="line">    ?propertyname wikibase:directClaim ?property</span><br><span class="line">    FILTER (STRSTARTS(STR(?property), &quot;http://www.wikidata.org/prop/direct&quot;))</span><br><span class="line">    FILTER (STRSTARTS(STR(?value), &quot;http://www.wikidata.org/entity&quot;))</span><br><span class="line">    FILTER (langMatches(lang(?label), &quot;EN&quot;))              </span><br><span class="line">&#125; limit 20</span><br></pre></td></tr></table></figure>
 <p>Here is the result:</p>
-<p><img src="https://bu.dusays.com/2022/08/29/630cc2d62d2e9.png" alt=""></p>
+<p><img src="https://imgurlcrcz.oss-cn-hangzhou.aliyuncs.com/img/20221106235131.png" alt=""></p>
 <h2 id="Query-in-Python"><a href="#Query-in-Python" class="headerlink" title="Query in Python"></a>Query in Python</h2><p>I use <a href="https://qwikidata.readthedocs.io/en/stable/readme.html">qwikidata</a> to search wikidata online service in python. There are other <a href="https://www.wikidata.org/wiki/Wikidata:Tools/For_programmers">Wikidata Tools</a> like go-wikidata.</p>
 <p>You can also use <a href="https://dumps.wikimedia.org/wikidatawiki/entities/">wikidata dump</a> to search at local.(I don’t recommend it because it is really resource-consuming. <a href="https://akbaritabar.netlify.app/how_to_use_a_wikidata_dump">A tutorial</a>)</p>
 <p>Here is <a href="https://www.wikidata.org/wiki/Wikidata:Data_access">all methods of wikidata access</a></p>
@@ -507,8 +510,8 @@ J(W, b) &=\sum_{i=1}^{N} L\left(y^{(i)}, f\left(X^{(i)} \mid W, b\right)\right)+
       </categories>
       <tags>
         <tag>Natural Language Processing</tag>
-        <tag>ARIMA</tag>
         <tag>MLP</tag>
+        <tag>ARIMA</tag>
       </tags>
   </entry>
   <entry>
@@ -651,8 +654,8 @@ MSLE = \cfrac{1}{n}\sum_{i=1}^n(log(p_i+1)-log(\alpha_i+1))^2
       </categories>
       <tags>
         <tag>Natural Language Processing</tag>
-        <tag>MLP</tag>
         <tag>Machine Learning</tag>
+        <tag>MLP</tag>
         <tag>LightGBM</tag>
       </tags>
   </entry>
@@ -998,44 +1001,6 @@ clf.coef_: [[0.95070185 1.15607502]]
       </tags>
   </entry>
   <entry>
-    <title>Note | Robust detection of link communities in large social networks by exploiting link semantics - PART 2</title>
-    <url>/201904/%E5%9F%BA%E4%BA%8E%E9%93%BE%E6%8E%A5%E5%86%85%E5%AE%B9%E7%9A%84%E7%A4%BE%E5%8C%BA%E5%8F%91%E7%8E%B0%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><p>We selected two datasets, including the content of internal emails of the US energy company Enron (Enron scandal, California energy crisis) and the content of three forums of the news site Reddit over three days. If user A comments on user B’s post, A link is generated from A to B with the content of the comment.</p>
-<span id="more"></span>
-<p><img src="https://s2.ax1x.com/2019/04/11/A7JUNd.md.png" alt="2.1"></p>
-<p>So how can we tell if our community’s findings are correct?</p>
-<p>For the first dataset, Berkeley students have divided these user nodes into 11 user communities, and we can directly compare the results found by the communities with those 11 communities. For the second dataset, we can directly compare the found communities with the content of the three forums.</p>
-<p><img src="https://s2.ax1x.com/2019/04/11/A7J03t.png" alt="2.2"></p>
-<h3 id="The-method-of-comparison"><a href="#The-method-of-comparison" class="headerlink" title="The method of comparison"></a>The method of comparison</h3><p>We adopted 8 kinds of the most advanced community discovery algorithms, including the use of topology, the use of node content, the use of link content, overlapping, non-overlapping (overlapping means that a user node can be placed into multiple communities), etc., as shown in the figure.</p>
-<p><img src="https://s2.ax1x.com/2019/04/11/A7JBgP.png" alt="2.3"></p>
-<h3 id="Evaluation-Indicators"><a href="#Evaluation-Indicators" class="headerlink" title="Evaluation Indicators"></a>Evaluation Indicators</h3><p>F-score and Jaccard similarity are two parameters used to evaluate the similarity. The larger the two parameters, the better the community discovery result.</p>
-<p><img src="https://s2.ax1x.com/2019/04/11/A7JgEQ.png" alt="2.4"></p>
-<h3 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h3><p><img src="https://s2.ax1x.com/2019/04/11/A7JDjf.md.png" alt="2.5"></p>
-<p><img src="https://s2.ax1x.com/2019/04/11/A7J5vV.png" alt="2.6"></p>
-<h3 id="Case-study"><a href="#Case-study" class="headerlink" title="Case study"></a>Case study</h3><p>A dataset from Reddit dated August 27, 2012 was selected for our analysis, compared to SCI</p>
-<p>The results of the SCI method are as follows:</p>
-<p><img src="https://s2.ax1x.com/2019/04/11/A7JyDS.png" alt="2.7"></p>
-<p>Our method:<br><img src="https://s2.ax1x.com/2019/04/17/AxqfbT.jpg" alt="2.8"></p>
-<p><img src="https://s2.ax1x.com/2019/04/17/Axq4VU.png" alt="2.9"></p>
-<p>Another benefit of our approach is that we can find the word cloud of the community through <script type="math/tex">fai</script> and <script type="math/tex">Y</script> :</p>
-<p><img src="https://s2.ax1x.com/2019/04/11/A7JR4s.md.png" alt="2.10"></p>
-<p>Some suggestions:</p>
-<p><img src="https://s2.ax1x.com/2019/04/11/A7Jh3q.png" alt="2.11"></p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p><img src="https://s2.ax1x.com/2019/04/11/A7JfCn.md.png" alt="2.12"></p>
-<p>This is the title of the article. Let’s discuss and summarize the keywords.</p>
-<p>Robust: In the traditional methods, when the network topology and topic clustering do not coincide, the efficiency of the method will become very low, but our method separates the network topology and topic clustering to discuss, which has a certain robustness.</p>
-<p>Detection of Link Communities: The main content of this thesis is community discovery.</p>
-<p>Exploiting the Link Semantics: based on Link Semantics.</p>
-]]></content>
-      <categories>
-        <category>Social Network</category>
-      </categories>
-      <tags>
-        <tag>Communities Detection</tag>
-        <tag>Knowledge Graph</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Note | Robust detection of link communities in large social networks by exploiting link semantics - PART 1</title>
     <url>/201904/%E5%9F%BA%E4%BA%8E%E9%93%BE%E6%8E%A5%E5%86%85%E5%AE%B9%E7%9A%84%E7%A4%BE%E5%8C%BA%E5%8F%91%E7%8E%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<p><a href="https://ojs.aaai.org/index.php/AAAI/article/view/11283/11142">Paper</a> </p>
@@ -1114,6 +1079,44 @@ clf.coef_: [[0.95070185 1.15607502]]
 <p><img src="https://s2.ax1x.com/2019/04/11/A7Jw9I.md.png" alt="1.19"></p>
 <p>Pseudo code is shown below.</p>
 <p><img src="https://s2.ax1x.com/2019/04/11/A7Jsu8.png" alt="1.20"></p>
+]]></content>
+      <categories>
+        <category>Social Network</category>
+      </categories>
+      <tags>
+        <tag>Communities Detection</tag>
+        <tag>Knowledge Graph</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Note | Robust detection of link communities in large social networks by exploiting link semantics - PART 2</title>
+    <url>/201904/%E5%9F%BA%E4%BA%8E%E9%93%BE%E6%8E%A5%E5%86%85%E5%AE%B9%E7%9A%84%E7%A4%BE%E5%8C%BA%E5%8F%91%E7%8E%B0%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><p>We selected two datasets, including the content of internal emails of the US energy company Enron (Enron scandal, California energy crisis) and the content of three forums of the news site Reddit over three days. If user A comments on user B’s post, A link is generated from A to B with the content of the comment.</p>
+<span id="more"></span>
+<p><img src="https://s2.ax1x.com/2019/04/11/A7JUNd.md.png" alt="2.1"></p>
+<p>So how can we tell if our community’s findings are correct?</p>
+<p>For the first dataset, Berkeley students have divided these user nodes into 11 user communities, and we can directly compare the results found by the communities with those 11 communities. For the second dataset, we can directly compare the found communities with the content of the three forums.</p>
+<p><img src="https://s2.ax1x.com/2019/04/11/A7J03t.png" alt="2.2"></p>
+<h3 id="The-method-of-comparison"><a href="#The-method-of-comparison" class="headerlink" title="The method of comparison"></a>The method of comparison</h3><p>We adopted 8 kinds of the most advanced community discovery algorithms, including the use of topology, the use of node content, the use of link content, overlapping, non-overlapping (overlapping means that a user node can be placed into multiple communities), etc., as shown in the figure.</p>
+<p><img src="https://s2.ax1x.com/2019/04/11/A7JBgP.png" alt="2.3"></p>
+<h3 id="Evaluation-Indicators"><a href="#Evaluation-Indicators" class="headerlink" title="Evaluation Indicators"></a>Evaluation Indicators</h3><p>F-score and Jaccard similarity are two parameters used to evaluate the similarity. The larger the two parameters, the better the community discovery result.</p>
+<p><img src="https://s2.ax1x.com/2019/04/11/A7JgEQ.png" alt="2.4"></p>
+<h3 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h3><p><img src="https://s2.ax1x.com/2019/04/11/A7JDjf.md.png" alt="2.5"></p>
+<p><img src="https://s2.ax1x.com/2019/04/11/A7J5vV.png" alt="2.6"></p>
+<h3 id="Case-study"><a href="#Case-study" class="headerlink" title="Case study"></a>Case study</h3><p>A dataset from Reddit dated August 27, 2012 was selected for our analysis, compared to SCI</p>
+<p>The results of the SCI method are as follows:</p>
+<p><img src="https://s2.ax1x.com/2019/04/11/A7JyDS.png" alt="2.7"></p>
+<p>Our method:<br><img src="https://s2.ax1x.com/2019/04/17/AxqfbT.jpg" alt="2.8"></p>
+<p><img src="https://s2.ax1x.com/2019/04/17/Axq4VU.png" alt="2.9"></p>
+<p>Another benefit of our approach is that we can find the word cloud of the community through <script type="math/tex">fai</script> and <script type="math/tex">Y</script> :</p>
+<p><img src="https://s2.ax1x.com/2019/04/11/A7JR4s.md.png" alt="2.10"></p>
+<p>Some suggestions:</p>
+<p><img src="https://s2.ax1x.com/2019/04/11/A7Jh3q.png" alt="2.11"></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p><img src="https://s2.ax1x.com/2019/04/11/A7JfCn.md.png" alt="2.12"></p>
+<p>This is the title of the article. Let’s discuss and summarize the keywords.</p>
+<p>Robust: In the traditional methods, when the network topology and topic clustering do not coincide, the efficiency of the method will become very low, but our method separates the network topology and topic clustering to discuss, which has a certain robustness.</p>
+<p>Detection of Link Communities: The main content of this thesis is community discovery.</p>
+<p>Exploiting the Link Semantics: based on Link Semantics.</p>
 ]]></content>
       <categories>
         <category>Social Network</category>
