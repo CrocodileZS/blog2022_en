@@ -939,8 +939,8 @@ clf.coef_: [[0.95070185 1.15607502]]
         <category>Machine Learning</category>
       </categories>
       <tags>
-        <tag>SVM</tag>
         <tag>Fisher</tag>
+        <tag>SVM</tag>
         <tag>K-Means</tag>
       </tags>
   </entry>
