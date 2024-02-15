@@ -510,8 +510,8 @@ J(W, b) &=\sum_{i=1}^{N} L\left(y^{(i)}, f\left(X^{(i)} \mid W, b\right)\right)+
       </categories>
       <tags>
         <tag>Natural Language Processing</tag>
-        <tag>MLP</tag>
         <tag>ARIMA</tag>
+        <tag>MLP</tag>
       </tags>
   </entry>
   <entry>
@@ -654,8 +654,8 @@ MSLE = \cfrac{1}{n}\sum_{i=1}^n(log(p_i+1)-log(\alpha_i+1))^2
       </categories>
       <tags>
         <tag>Natural Language Processing</tag>
-        <tag>Machine Learning</tag>
         <tag>MLP</tag>
+        <tag>Machine Learning</tag>
         <tag>LightGBM</tag>
       </tags>
   </entry>

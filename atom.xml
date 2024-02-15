@@ -125,9 +125,9 @@
     
     <category term="Natural Language Processing" scheme="https://enblog.crocodilezs.top/tags/Natural-Language-Processing/"/>
     
-    <category term="MLP" scheme="https://enblog.crocodilezs.top/tags/MLP/"/>
-    
     <category term="ARIMA" scheme="https://enblog.crocodilezs.top/tags/ARIMA/"/>
+    
+    <category term="MLP" scheme="https://enblog.crocodilezs.top/tags/MLP/"/>
     
   </entry>
   
@@ -150,9 +150,9 @@
     
     <category term="Natural Language Processing" scheme="https://enblog.crocodilezs.top/tags/Natural-Language-Processing/"/>
     
-    <category term="Machine Learning" scheme="https://enblog.crocodilezs.top/tags/Machine-Learning/"/>
-    
     <category term="MLP" scheme="https://enblog.crocodilezs.top/tags/MLP/"/>
+    
+    <category term="Machine Learning" scheme="https://enblog.crocodilezs.top/tags/Machine-Learning/"/>
     
     <category term="LightGBM" scheme="https://enblog.crocodilezs.top/tags/LightGBM/"/>
     
